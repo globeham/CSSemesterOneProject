@@ -24,19 +24,19 @@ public class GameMap extends JPanel {
         for (int i = 0; i < routeCode.length(); i++) {
             // adding path depending on direction indicated in route code
             if (routeCode.substring(i, i + 1).equals("D")) {
-                path.add(startX, startY + 100);
+                path.add(new point2D(startX, startY + 100));
                 startY += 100;
             }
             if (routeCode.substring(i, i + 1).equals("U")) {
-                path.add(startX, startY - 100);
+                path.add(new point2D(startX, startY - 100));
                 startY -= 100;
             }
             if (routeCode.substring(i, i + 1).equals("L")) {
-                path.add(startX - 100, startY);
+                path.add(new point2D(startX - 100, startY));
                 startX -= 100;
             }
             if (routeCode.substring(i, i + 1).equals("R")) {
-                path.add(startX + 100, startY);
+                path.add(new point2D(startX + 100, startY));
                 startX += 100;
             }
         }
