@@ -6,38 +6,77 @@ public class gameMap {
     private int width;
     private int height;
     private ArrayList<point2D> path;
-
-    public gameMap(int initWidth, int initHeight, ArrayList<point2D> initPath) {
+    
+    public gameMap(int initWidth, int initHeight) {
         this.width = initWidth;
         this.height = initHeight;
-        this.path = initPath;
+        this.path = new ArrayList<point2D>();
     }
-
-
-    // precon: routeCode is made up of letters U, D, L, R, indicating, up, down, left, and right
-    // method will create a path from the given routeCode
+    
+    // Creates path from routeCode and sets it as the map's path
+    public void setPath(String routeCode, int startX, int startY) {
+        this.path = createPath(routeCode, startX, startY);
+    }
+    
+    // Creates and returns a path from the given routeCode
     public ArrayList<point2D> createPath(String routeCode, int startX, int startY) {
-        ArrayList<point2D> path = new ArrayList<point2D>();
-        // looping through routeCode
+        ArrayList<point2D> newPath = new ArrayList<point2D>();
+        
+        // Add starting point
+        newPath.add(new point2D(startX, startY));
+        
+        int currentX = startX;
+        int currentY = startY;
+        
+        // Loop through routeCode
         for (int i = 0; i < routeCode.length(); i++) {
-            // adding path depending on direction indicated in route code
-            if (routeCode.substring(i, i + 1).equals("D")) {
-                path.add(new point2D(startX, startY + 100));
-                startY += 100;
+            char direction = routeCode.charAt(i);
+            
+            switch (direction) {
+                case 'D':
+                    currentY += 90;
+                    break;
+                case 'U':
+                    currentY -= 90;
+                    break;
+                case 'L':
+                    currentX -= 90;
+                    break;
+                case 'R':
+                    currentX += 90;
+                    break;
             }
-            if (routeCode.substring(i, i + 1).equals("U")) {
-                path.add(new point2D(startX, startY - 100));
-                startY -= 100;
-            }
-            if (routeCode.substring(i, i + 1).equals("L")) {
-                path.add(new point2D(startX - 100, startY + 0));
-                startX -= 100;
-            }
-            if (routeCode.substring(i, i + 1).equals("R")) {
-                path.add(new point2D(startX + 100, startY + 0));
-                startX += 100;
-            }
+            newPath.add(new point2D(currentX, currentY));
         }
+        return newPath;
+    }
+    
+    // Getters
+    public ArrayList<point2D> getPath() {
         return path;
+    }
+    
+    public int getWidth() {
+        return width;
+    }
+    
+    public int getHeight() {
+        return height;
+    }
+    
+    // Draw the path on the map
+    public void drawPath(Graphics g) {
+        if (path.size() < 2) return;
+        
+        g.setColor(Color.YELLOW);
+        for (int i = 0; i < path.size() - 1; i++) {
+            point2D current = path.get(i);
+            point2D next = path.get(i + 1);
+            Graphics2D g2d = (Graphics2D) g;
+            BasicStroke thickStroke = new BasicStroke(10.0f); 
+            g2d.setStroke(thickStroke);
+            g2d.drawLine(current.getX(), current.getY(), 
+                      next.getX(), next.getY());
+        }
     }
 }
