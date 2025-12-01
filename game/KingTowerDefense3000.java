@@ -4,6 +4,8 @@ import java.awt.*;
 public class KingTowerDefense3000 extends JFrame {
     private gameMap map;
     private GamePanel gamePanel;
+    private EnemyManager enemyManager;
+    private Timer gameTimer;
     
     public KingTowerDefense3000() {
         setTitle("Tower Defense Game");
@@ -34,6 +36,8 @@ public class KingTowerDefense3000 extends JFrame {
         String routeCode = "DDDDDRRRRRRUUUUUULLLLLDDDDDDRRRRUUULLDDDRRUULLDDRRUU";
         //String routeCode = "DDDRRRRRRUUULLLLLLDDDDRRRRRRUUUULLLLLLDDDDRRRRRUUUU";
         map.setPath(routeCode, 100, 100);
+
+        enemyManager = new EnemyManager(map.getPath());
         
         gamePanel = new GamePanel(map);
         add(gamePanel);
@@ -41,6 +45,23 @@ public class KingTowerDefense3000 extends JFrame {
         pack();
         setLocationRelativeTo(null); 
         setVisible(true);
+    }
+
+    private void startGameLoop() {
+        Timer gameTimer = new Timer(16, e -> updateGame());
+        gameTimer.start();
+    }
+    
+    private void updateGame() {
+        enemyManager.updateEnemies();
+        
+        
+        if (enemyManager.isWaveComplete()) {
+            int nextWave = enemyManager.getCurrentWave() + 1;
+            enemyManager.spawnWave();
+        }
+        
+        gamePanel.repaint();
     }
     
     public static void main(String[] args) {

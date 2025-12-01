@@ -57,6 +57,10 @@ public class Enemy {
         g.fillOval(x - 10, y - 10, 20, 20);
     }
 
+    public boolean reachedEnd() {
+        return pathIndex >= path.size() - 1;
+    }
+
     public int getX() {
         return x;
     }

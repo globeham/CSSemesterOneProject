@@ -46,4 +46,14 @@ public class EnemyManager{
         return enemies;
     }
 
+    public boolean isWaveComplete() {
+        return enemies.isEmpty();
+    }
+
+    public int getCurrentWave() {
+        return currentWave;
+    }
+
+    
+
 }
