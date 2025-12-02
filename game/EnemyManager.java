@@ -1,10 +1,13 @@
 import java.awt.*;
 import java.util.ArrayList;
+import javax.swing.*;
+
 
 public class EnemyManager{
     private ArrayList<point2D> path;
     private int currentWave;
     private ArrayList<Enemy> enemies;
+    private Timer enemySpawnTimer;
 
     public EnemyManager(ArrayList<point2D> path) {
         this.path = path;
@@ -15,7 +18,10 @@ public class EnemyManager{
     public void spawnWave() {
         currentWave++;
         for (int i = 0; i < currentWave * 5; i++) {
-            enemies.add(new Enemy(100, 10, 2, path, Color.RED));
+            Enemy enemy = new Enemy(100, 10, 2, path, Color.RED);
+            enemySpawnTimer = new Timer(i * 1000, e -> enemies.add(enemy));
+            enemySpawnTimer.setRepeats(false);
+            enemySpawnTimer.start();
         }
     }
 

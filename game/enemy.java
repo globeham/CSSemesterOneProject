@@ -69,6 +69,34 @@ public class Enemy {
         return y;
     }
 
+    public void setDistanceTraveled(int distance) {
+        int traveled = 0;
+        pathIndex = 0;
+        x = path.get(0).getX();
+        y = path.get(0).getY();
+
+        while (pathIndex < path.size() - 1 && traveled < distance) {
+            point2D current = path.get(pathIndex);
+            point2D next = path.get(pathIndex + 1);
+            int segmentLength = (int)Math.sqrt(Math.pow(next.getX() - current.getX(), 2) + Math.pow(next.getY() - current.getY(), 2));
+
+            if (traveled + segmentLength <= distance) {
+                traveled += segmentLength;
+                x = next.getX();
+                y = next.getY();
+                pathIndex++;
+            } else {
+                int remaining = distance - traveled;
+                int deltaX = next.getX() - current.getX();
+                int deltaY = next.getY() - current.getY();
+                double ratio = (double)remaining / segmentLength;
+                x = current.getX() + (int)(deltaX * ratio);
+                y = current.getY() + (int)(deltaY * ratio);
+                traveled += remaining;
+            }
+        }
+    }
+
     public ArrayList<point2D> getPath() {
         return path;
     }

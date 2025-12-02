@@ -6,6 +6,7 @@ public class KingTowerDefense3000 extends JFrame {
     private GamePanel gamePanel;
     private EnemyManager enemyManager;
     private Timer gameTimer;
+    private int numberOfWaves = 5;
     
     public KingTowerDefense3000() {
         setTitle("Tower Defense Game");
@@ -58,13 +59,11 @@ public class KingTowerDefense3000 extends JFrame {
     private void updateGame() {
         enemyManager.updateEnemies();
         
-        
-        if (enemyManager.isWaveComplete()) {
-            int nextWave = enemyManager.getCurrentWave() + 1;
+        if (enemyManager.isWaveComplete() && enemyManager.getCurrentWave() < numberOfWaves) {
             enemyManager.spawnWave();
         }
-        
-        gamePanel.repaint();
+            
+            gamePanel.repaint();
     }
     
     public static void main(String[] args) {
