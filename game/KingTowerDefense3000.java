@@ -39,12 +39,15 @@ public class KingTowerDefense3000 extends JFrame {
 
         enemyManager = new EnemyManager(map.getPath());
         
-        gamePanel = new GamePanel(map);
+        gamePanel = new GamePanel(map, enemyManager);
         add(gamePanel);
         
         pack();
         setLocationRelativeTo(null); 
         setVisible(true);
+
+        startGameLoop();
+        enemyManager.spawnWave();
     }
 
     private void startGameLoop() {

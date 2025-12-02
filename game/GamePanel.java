@@ -3,9 +3,11 @@ import javax.swing.*;
 
 public class GamePanel extends JPanel {
     private gameMap map;
+    private EnemyManager enemyManager; 
     
-    public GamePanel(gameMap map) {
+    public GamePanel(gameMap map, EnemyManager enemyManager) {
         this.map = map;
+        this.enemyManager = enemyManager; 
         this.setPreferredSize(new Dimension(map.getWidth(), map.getHeight()));
         this.setBackground(Color.GREEN);
     }
@@ -15,6 +17,7 @@ public class GamePanel extends JPanel {
         super.paintComponent(g);
         
         map.drawPath(g);
+        enemyManager.drawEnemies(g);
         
         g.setColor(Color.RED);
         for (point2D point : map.getPath()) {
