@@ -34,7 +34,7 @@ public class gameMap {
             
             switch (direction) {
                 case 'D':
-                    currentY += 90;
+                currentY += 90;
                     break;
                 case 'U':
                     currentY -= 90;

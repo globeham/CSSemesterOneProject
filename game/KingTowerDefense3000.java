@@ -6,6 +6,7 @@ public class KingTowerDefense3000 extends JFrame {
     private GamePanel gamePanel;
     private EnemyManager enemyManager;
     private Timer gameTimer;
+    private towerManager towerManager = new towerManager();
     private int numberOfWaves = 5;
     
     public KingTowerDefense3000() {
@@ -13,34 +14,23 @@ public class KingTowerDefense3000 extends JFrame {
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setResizable(false);
         
-        map = new gameMap(800, 600);
+        map = new gameMap(1000, 800);
 
-        /* 
-        String routeCode = "";
-        for (int i = 0; i < 100; i++) {
-            int rand = (int)(Math.random()* 100) + 1;
-            if (rand <= 25) {
-                routeCode += "U";
-            }
-            else if (rand <= 50) {
-                routeCode += "D";
-            }
-            else if (rand <= 75) {
-                routeCode += "R";
-            }
-            else {
-                routeCode += "L";
-            }
-        }
-    */
+        towerManager = new towerManager();
+        towerManager.addMoney(200);
 
         String routeCode = "DDDDDRRRRRRUUUUUULLLLLDDDDDDRRRRUUULLDDDRRUULLDDRRUU";
-        //String routeCode = "DDDRRRRRRUUULLLLLLDDDDRRRRRRUUUULLLLLLDDDDRRRRRUUUU";
         map.setPath(routeCode, 100, 100);
 
         enemyManager = new EnemyManager(map.getPath());
         
-        gamePanel = new GamePanel(map, enemyManager);
+        gamePanel = new GamePanel(map, enemyManager, towerManager); 
+        
+        gamePanel.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent e) {
+                placeTower(e.getX(), e.getY());
+            }
+        });
         add(gamePanel);
         
         pack();
@@ -49,6 +39,20 @@ public class KingTowerDefense3000 extends JFrame {
 
         startGameLoop();
         enemyManager.spawnWave();
+    }
+
+    private void placeTower(int x, int y) {
+        int adjustedY = y - getInsets().top;
+        
+        Tower tower = new Tower(30, 100, 10, 50, Color.BLUE);
+        
+        if (towerManager.placeTower(tower, x, adjustedY)) {
+            System.out.println("Tower placed at (" + x + ", " + adjustedY + ")! Money: " + towerManager.getMoney());
+            gamePanel.repaint();
+        } 
+        else {
+            System.out.println("Not enough money! Need: " + tower.getCost() + ", Have: " + towerManager.getMoney());
+        }
     }
 
     private void startGameLoop() {

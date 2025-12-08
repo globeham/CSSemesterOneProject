@@ -4,10 +4,12 @@ import javax.swing.*;
 public class GamePanel extends JPanel {
     private gameMap map;
     private EnemyManager enemyManager; 
+    private towerManager towerManager;
     
-    public GamePanel(gameMap map, EnemyManager enemyManager) {
+    public GamePanel(gameMap map, EnemyManager enemyManager, towerManager towerManager) {
         this.map = map;
         this.enemyManager = enemyManager; 
+        this.towerManager = towerManager;
         this.setPreferredSize(new Dimension(map.getWidth(), map.getHeight()));
         this.setBackground(Color.GREEN);
     }
@@ -18,6 +20,7 @@ public class GamePanel extends JPanel {
         
         map.drawPath(g);
         enemyManager.drawEnemies(g);
+        towerManager.drawTowers(g);
         
         g.setColor(Color.RED);
         for (point2D point : map.getPath()) {
