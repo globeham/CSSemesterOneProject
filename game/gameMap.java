@@ -76,7 +76,7 @@ public class gameMap {
             BasicStroke thickStroke = new BasicStroke(10.0f); 
             g2d.setStroke(thickStroke);
             g2d.drawLine(current.getX(), current.getY(), 
-                      next.getX(), next.getY());
+            next.getX(), next.getY());
         }
     }
 }

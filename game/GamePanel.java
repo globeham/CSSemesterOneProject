@@ -25,6 +25,12 @@ public class GamePanel extends JPanel {
         g.setColor(Color.RED);
         for (point2D point : map.getPath()) {
             g.fillOval(point.getX() - 5, point.getY() - 5, 10, 10);
+            BufferedImage myPicture = ImageIO.read(new File("brownpath.png"));
+            JLabel picLabel = new JLabel(new ImageIcon(myPicture));
+            add(picLabel);
+            picLabel.setVerticalAlignment(point.getY());
+            picLabel.setHorizontalAlignment(point.getX());
+
         }
     }
 }
