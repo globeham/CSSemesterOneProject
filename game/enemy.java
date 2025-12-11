@@ -1,5 +1,9 @@
 import java.awt.*;
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
+import javax.imageio.ImageIO;
 
 public class Enemy {
     private int health;
@@ -9,13 +13,16 @@ public class Enemy {
     private int pathIndex;
     private ArrayList<point2D> path;
     private Color color;
+    protected BufferedImage image;
 
-    public Enemy(int health, int reward, int speed, ArrayList<point2D> path, Color color) {
+    public Enemy(int health, int reward, int speed, ArrayList<point2D> path, Color color,
+    BufferedImage image) {
         this.health = health;
         this.reward = reward;
         this.speed = speed;
         this.path = path;
         this.color = color;
+        this.image = image;
         this.pathIndex = 0;
 
         point2D start = path.get(0);
@@ -53,8 +60,12 @@ public class Enemy {
     }
 
     public void draw(Graphics g) {
-        g.setColor(color);
-        g.fillOval(x - 10, y - 10, 20, 20);
+        if (image != null) {
+            g.drawImage(image, x - 10, y - 10, 20, 20, null);
+        } else {
+            g.setColor(color);
+            g.fillOval(x - 10, y - 10, 20, 20);
+        }
     }
 
     public boolean reachedEnd() {

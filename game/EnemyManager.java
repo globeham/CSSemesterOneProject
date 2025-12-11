@@ -3,7 +3,7 @@ import java.util.ArrayList;
 import javax.swing.*;
 
 
-public class EnemyManager{
+public class EnemyManager {
     private ArrayList<point2D> path;
     private int currentWave;
     private ArrayList<Enemy> enemies;
