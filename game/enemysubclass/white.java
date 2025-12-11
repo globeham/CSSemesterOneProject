@@ -1,5 +1,5 @@
 /* 
-enemy subclass for bluejay
+enemy subclass for white bird
 */
 import java.awt.*;
 import java.awt.image.BufferedImage;
@@ -8,14 +8,14 @@ import java.io.IOException;
 import java.util.ArrayList;
 import javax.imageio.ImageIO;
 
-public class bluejay extends enemy {
-    public bluejay(int health, int reward, int speed, ArrayList<point2D> path, 
+public class white extends enemy {
+    public white(int health, int reward, int speed, ArrayList<point2D> path, 
     BufferedImage image) {
         super(health, reward, speed, path, image);
         try {
-            this.image = ImageIO.read(new File("images/bird_1_bluejay.png"));
+            this.image = ImageIO.read(new File("images/bird_2_white.png"));
         } catch (IOException e) {
-            System.out.println("Could not load bluejay image: " + e.getMessage());
+            System.out.println("Could not load white image: " + e.getMessage());
         }
     }
 

@@ -1,3 +1,6 @@
+/*
+Class provides a gameMap constructor with path and background image
+*/
 import java.awt.*;
 import javax.swing.*;
 import java.util.ArrayList;

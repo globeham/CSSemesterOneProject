@@ -1,3 +1,7 @@
+/*
+Super class for all enemies in the game
+*/
+
 import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.File;
@@ -15,6 +19,7 @@ public class Enemy {
     private Color color;
     protected BufferedImage image;
 
+    // constructor for enemy class
     public Enemy(int health, int reward, int speed, ArrayList<point2D> path, Color color,
     BufferedImage image) {
         this.health = health;
@@ -30,6 +35,7 @@ public class Enemy {
         this.y = start.getY();
     }
 
+    // moves the enemy along the path
     public void move() {
         if (pathIndex < path.size() - 1) {
             point2D target = path.get(pathIndex + 1);
@@ -51,14 +57,17 @@ public class Enemy {
         }
     }
 
+    // takes damage and reduces health
     public void takeDamage(int damage) {
         health -= damage;
     }
 
+    // returns true if enemy is alive
     public boolean isAlive() {
         return health > 0;
     }
 
+    // basic draw method for enemy (just a circle)
     public void draw(Graphics g) {
         if (image != null) {
             g.drawImage(image, x - 10, y - 10, 20, 20, null);
@@ -68,18 +77,22 @@ public class Enemy {
         }
     }
 
+    // returns true if enemy has reached the end of the path
     public boolean reachedEnd() {
         return pathIndex >= path.size() - 1;
     }
 
+    // returns x value
     public int getX() {
         return x;
     }
 
+    // returns y value
     public int getY() {
         return y;
     }
 
+    // sets distance traveled by enemy
     public void setDistanceTraveled(int distance) {
         int traveled = 0;
         pathIndex = 0;
@@ -108,6 +121,7 @@ public class Enemy {
         }
     }
 
+    // getter for path
     public ArrayList<point2D> getPath() {
         return path;
     }
