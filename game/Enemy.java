@@ -15,6 +15,7 @@ public class Enemy {
     private ArrayList<point2D> path;
     private Color color;
     protected BufferedImage image;
+    protected int drawSize = 32;
 
     // constructor for enemy class
     public Enemy(int health, int reward, int speed, ArrayList<point2D> path, Color color) {
@@ -30,6 +31,7 @@ public class Enemy {
         this.x = start.getX();
         this.y = start.getY();
     }
+
 
     // moves the enemy along the path
     public void move() {

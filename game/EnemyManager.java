@@ -19,15 +19,38 @@ public class EnemyManager {
         this.enemies = new ArrayList<Enemy>();
     }
 
-    // spawns a wave of enemies
     public void spawnWave() {
         currentWave++;
-        for (int i = 0; i < currentWave * 5; i++) {
-            Enemy enemy = new Enemy(100, 10, 2, path, Color.RED);
-            enemySpawnTimer = new Timer(i * 1000, e -> enemies.add(enemy));
-            enemySpawnTimer.setRepeats(false);
-            enemySpawnTimer.start();
+        int enemiesInWave = currentWave * 5;
+        int spawnDelayMs = 800; // ms between spawns
+        for (int i = 0; i < enemiesInWave; i++) {
+            int delay = i * spawnDelayMs;
+            int index = i;
+            int wave = currentWave;
+            Timer t = new Timer(delay, e -> {
+                Enemy enemy = createEnemyForWave(wave, index);
+                enemies.add(enemy);
+            });
+            t.setRepeats(false);
+            t.start();
         }
+    }
+
+    // simple factory - tweak stats and patterns to taste
+    private Enemy createEnemyForWave(int wave, int index) {
+        // wave 1-2: bluejays (fast, low hp)
+        if (wave <= 2) {
+            return new bluejay(40, 5, 3, path);
+        }
+        // wave 3-4: mix bluejays and robins (medium)
+        if (wave <= 4) {
+            if (index % 3 == 0) return new robin(80, 10, 2, path);
+            return new bluejay(50, 6, 3, path);
+        }
+        // wave 5+: introduce stronger cardinals
+        if (index % 6 == 0) return new cardinal(200, 25, 2, path);
+        if (index % 2 == 0) return new robin(90, 12, 2, path);
+        return new bluejay(60, 8, 3, path);
     }
 
     // removes dead enemies and enemies that have reached the end of the path
