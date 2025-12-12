@@ -28,7 +28,7 @@ public class Tower {
             double distance = Math.sqrt(Math.pow(enemy.getX() - x, 2) + Math.pow(enemy.getY() - y, 2));
             if (distance <= radius) {
                 enemy.takeDamage(damage);
-                shotCooldown = speed;
+                shotCooldown = shootingSpeed;
                 break;
             }
         }
@@ -40,7 +40,7 @@ public class Tower {
     }
 
     public void upgradeSpeed(int increment) {
-        this.speed += increment;
+        this.shootingSpeed += increment;
     }
 
     public void upgradeRadius(int increment) {
