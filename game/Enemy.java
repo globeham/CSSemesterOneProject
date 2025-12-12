@@ -4,10 +4,7 @@ Super class for all enemies in the game
 
 import java.awt.*;
 import java.awt.image.BufferedImage;
-import java.io.File;
-import java.io.IOException;
 import java.util.ArrayList;
-import javax.imageio.ImageIO;
 
 public class Enemy {
     private int health;
@@ -20,8 +17,7 @@ public class Enemy {
     protected BufferedImage image;
 
     // constructor for enemy class
-    public Enemy(int health, int reward, int speed, ArrayList<point2D> path, Color color,
-    BufferedImage image) {
+    public Enemy(int health, int reward, int speed, ArrayList<point2D> path, Color color) {
         this.health = health;
         this.reward = reward;
         this.speed = speed;

@@ -19,8 +19,8 @@ public class KingTowerDefense3000 extends JFrame {
         towerManager = new towerManager();
         towerManager.addMoney(200);
 
-        String routeCode = "DDDDDRRRRRRUUUUUULLLLLDDDDDDRRRRUUULLDDDRRUULLDDRRUU";
-        map.setPath(routeCode, 100, 100);
+        String routeCode = "RRRRRRRRRRRRRDDDDDDDDDDDDDDDDDDDDDDDRRRRRRRRRRRRRRRRRRUUUUUUUUUUUUUUUUUUUUUUURRRRRRRRRRRRRDDDDDDDDDDDDDDDDDDDRRRRRRRR";
+        map.setPath(routeCode, 0, 185);
 
         enemyManager = new EnemyManager(map.getPath());
         
@@ -43,6 +43,12 @@ public class KingTowerDefense3000 extends JFrame {
 
     private void placeTower(int x, int y) {
         int adjustedY = y - getInsets().top;
+
+        int minDistanceFromPath = 50; 
+        if (map.isTooCloseToPath(x, adjustedY, minDistanceFromPath)) {
+            System.out.println("Too close to path — place tower further away.");
+            return;
+        }
         
         Tower tower = new Tower(30, 100, 10, 50, Color.BLUE);
         
@@ -54,6 +60,7 @@ public class KingTowerDefense3000 extends JFrame {
             System.out.println("Not enough money! Need: " + tower.getCost() + ", Have: " + towerManager.getMoney());
         }
     }
+
 
     private void startGameLoop() {
         Timer gameTimer = new Timer(16, e -> updateGame());

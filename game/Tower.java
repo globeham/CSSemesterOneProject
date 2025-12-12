@@ -2,7 +2,7 @@ import java.awt.*;
 import java.util.ArrayList;
 
 public class Tower {
-    private int speed;
+    private int shootingSpeed;
     private int radius;
     private int damage;
     private int x,y;
@@ -11,7 +11,7 @@ public class Tower {
     private int shotCooldown;
 
     public Tower(int speed, int radius, int damage, int cost, Color color) {
-        this.speed = speed;
+        this.shootingSpeed = speed;
         this.radius = radius;
         this.damage = damage;
         this.color = color;

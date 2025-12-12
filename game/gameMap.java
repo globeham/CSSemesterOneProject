@@ -37,21 +37,57 @@ public class gameMap {
             
             switch (direction) {
                 case 'D':
-                currentY += 90;
+                currentY += 20;
                     break;
                 case 'U':
-                    currentY -= 90;
+                    currentY -= 20;
                     break;
                 case 'L':
-                    currentX -= 90;
+                    currentX -= 20;
                     break;
                 case 'R':
-                    currentX += 90;
+                    currentX += 20;
                     break;
             }
             newPath.add(new point2D(currentX, currentY));
         }
         return newPath;
+    }
+
+    // returns the shortest distance from (x,y) to the path (segments)
+    public double distanceToPath(int x, int y) {
+        if (path == null || path.size() == 0) return Double.MAX_VALUE;
+        double minDist = Double.MAX_VALUE;
+        for (int i = 0; i < path.size() - 1; i++) {
+            point2D a = path.get(i);
+            point2D b = path.get(i + 1);
+            double d = pointToSegmentDistance(x, y, a.getX(), a.getY(), b.getX(), b.getY());
+            if (d < minDist) minDist = d;
+        }
+        return minDist;
+    }
+
+    // convenience: true if (x,y) is within minDistance of the path
+    public boolean isTooCloseToPath(int x, int y, int minDistance) {
+        return distanceToPath(x, y) < minDistance;
+    }
+
+    // distance from point (px,py) to segment (x1,y1)-(x2,y2)
+    private double pointToSegmentDistance(double px, double py,
+                                          double x1, double y1,
+                                          double x2, double y2) {
+        double dx = x2 - x1;
+        double dy = y2 - y1;
+        if (dx == 0 && dy == 0) {
+            dx = px - x1;
+            dy = py - y1;
+            return Math.hypot(dx, dy);
+        }
+        double t = ((px - x1) * dx + (py - y1) * dy) / (dx*dx + dy*dy);
+        t = Math.max(0, Math.min(1, t));
+        double projX = x1 + t * dx;
+        double projY = y1 + t * dy;
+        return Math.hypot(px - projX, py - projY);
     }
     
     // Getters

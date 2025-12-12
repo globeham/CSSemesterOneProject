@@ -8,7 +8,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import javax.imageio.ImageIO;
 
-public class bluejay extends enemy {
+public class bluejay extends Enemy {
     public bluejay(int health, int reward, int speed, ArrayList<point2D> path, 
     BufferedImage image) {
         super(health, reward, speed, path, image);
