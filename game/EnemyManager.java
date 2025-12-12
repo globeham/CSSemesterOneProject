@@ -23,7 +23,7 @@ public class EnemyManager {
     public void spawnWave() {
         currentWave++;
         for (int i = 0; i < currentWave * 5; i++) {
-            Enemy enemy = new Enemy(100, 10, 2, path, Color.RED);
+            Enemy enemy = new Enemy(100, 10, 2, path, Color.RED, );
             enemySpawnTimer = new Timer(i * 1000, e -> enemies.add(enemy));
             enemySpawnTimer.setRepeats(false);
             enemySpawnTimer.start();

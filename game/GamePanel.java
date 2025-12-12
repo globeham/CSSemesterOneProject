@@ -25,13 +25,13 @@ public class GamePanel extends JPanel {
         }
     }
     
-    @Override
+        @Override
     public void paintComponent(Graphics g) {
         super.paintComponent(g);
         if (bgImage != null) {
             g.drawImage(bgImage, 0, 0, this.getWidth(), this.getHeight(), null);
         }
-        map.drawPath(g);
+        // removed map.drawPath(g); to hide the yellow path
         enemyManager.drawEnemies(g);
         towerManager.drawTowers(g);
     }
