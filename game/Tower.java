@@ -10,7 +10,7 @@ public class Tower {
     private int cost;
     private int shotCooldown;
 
-    public Tower(int speed, int radius, int damage, int cost, Color color) {
+    public Tower(int speed, int radius, int damage, int cost, BufferedImage image) {
         this.shootingSpeed = speed;
         this.radius = radius;
         this.damage = damage;
