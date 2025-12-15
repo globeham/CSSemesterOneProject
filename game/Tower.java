@@ -35,9 +35,9 @@ public class Tower {
                 pulse = 30;
                 break;
             }
-            pulseTick++;
 
             if (pulse > 0) {
+                pulseTick++;
                 if (pulseTick % 5==0) {
                     pulse--;
                 }
