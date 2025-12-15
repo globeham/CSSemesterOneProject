@@ -126,4 +126,9 @@ public class Enemy {
     public ArrayList<point2D> getPath() {
         return path;
     }
+
+    // getter for health
+    public int getHealth() {
+        return health;      
+    }
 }

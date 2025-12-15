@@ -48,25 +48,48 @@ public class EnemyManager {
             return new bluejay(50, 6, 3, path);
         }
         // wave 5+: introduce stronger cardinals
-        if (index % 6 == 0) return new cardinal(200, 25, 2, path);
+        if (wave <= 6) {
+            if (index % 6 == 0) return new cardinal(200, 25, 2, path);
+            if (index % 2 == 0) return new robin(90, 12, 2, path);
+            return new bluejay(60, 8, 3, path);
+        }
+        // wave 7+: use sparrows
+        if (wave <= 10) {   
+            if (index % 6 == 0) return new cardinal(200, 25, 2, path);
+            if (index % 2 == 0) return new robin(90, 12, 2, path);
+            if (index % 7 == 0) return new sparrow(400, 50, 2, path);
+            return new bluejay(60, 8, 3, path);
+        }
+        // wave 11+: more sparrows and white
+        else {
+        if (index % 5 == 0) return new sparrow(400, 50, 2, path);
+        if (index % 3 == 0) return new cardinal(200, 25, 2, path);
+        if (index % 7 == 0) return new white(800, 100, 2, path);
         if (index % 2 == 0) return new robin(90, 12, 2, path);
-        return new bluejay(60, 8, 3, path);
+        return new bluejay(60, 8, 3, path);         
+        }
     }
 
     // removes dead enemies and enemies that have reached the end of the path
     public void updateEnemies(towerManager towerManager) {
-        for (int i = 0; i < enemies.size(); i++) {
-            Enemy enemy = enemies.get(i);
+        if (enemies == null || enemies.isEmpty()) return;
+
+        java.util.Iterator<Enemy> it = enemies.iterator();
+        while (it.hasNext()) {
+            Enemy enemy = it.next();
+            // move the enemy along the path
             enemy.move();
-            if (enemyReachedEnd(enemy)) {
-                enemies.remove(i);
-                i--;
-            }
+
+            // if enemy died, award money and remove
             if (!enemy.isAlive()) {
-                towerManager.addMoney(enemy.getReward());
-                enemy.image = null; // remove image reference
-                enemies.remove(i);
-                i--;
+                towerManager.addMoneyFromEnemy(enemy);
+                it.remove();
+                continue;
+            }
+
+            // if enemy reached the end, remove (no reward)
+            if (enemyReachedEnd(enemy)) {
+                it.remove();
             }
         }
     }

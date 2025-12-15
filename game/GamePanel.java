@@ -34,5 +34,13 @@ public class GamePanel extends JPanel {
         // removed map.drawPath(g); to hide the yellow path
         enemyManager.drawEnemies(g);
         towerManager.drawTowers(g);
+
+        displayMoney(g, towerManager.getMoney());
+    }
+
+    public void displayMoney(Graphics g, int money) {
+        g.setColor(Color.BLACK);
+        g.setFont(new Font("Arial", Font.BOLD, 16));
+        g.drawString("" + money, 10, 20);
     }
 }
