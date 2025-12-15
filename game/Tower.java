@@ -10,7 +10,6 @@ public class Tower {
     private int cost;
     private int shotCooldown;
     private int pulse = 0;
-    private int pulseTick = 0;
 
     public Tower(int speed, int radius, int damage, int cost) {
         this.shootingSpeed = speed;
@@ -37,10 +36,7 @@ public class Tower {
             }
 
             if (pulse > 0) {
-                pulseTick++;
-                if (pulseTick % 5==0) {
-                    pulse--;
-                }
+                pulse--;
             }
         }
     }
