@@ -54,11 +54,17 @@ public class EnemyManager {
     }
 
     // removes dead enemies and enemies that have reached the end of the path
-    public void updateEnemies() {
+    public void updateEnemies(towerManager towerManager) {
         for (int i = 0; i < enemies.size(); i++) {
             Enemy enemy = enemies.get(i);
             enemy.move();
-            if (!enemy.isAlive() || enemyReachedEnd(enemy)) {
+            if (enemyReachedEnd(enemy)) {
+                enemies.remove(i);
+                i--;
+            }
+            if (!enemy.isAlive()) {
+                towerManager.addMoney(enemy.getReward());
+                enemy.image = null; // remove image reference
                 enemies.remove(i);
                 i--;
             }

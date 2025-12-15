@@ -89,6 +89,9 @@ public class Enemy {
     public int getY() {
         return y;
     }
+    public int getReward() {
+        return reward;
+    }
 
     // sets distance traveled by enemy
     public void setDistanceTraveled(int distance) {
