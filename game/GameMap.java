@@ -1,5 +1,5 @@
 /*
-Class provides a gameMap constructor with path and background image
+Class provides a GameMap constructor with path and background image
 */
 import java.awt.*;
 import javax.swing.*;
@@ -59,8 +59,8 @@ public class GameMap {
         if (path == null || path.size() == 0) return Double.MAX_VALUE;
         double minDist = Double.MAX_VALUE;
         for (int i = 0; i < path.size() - 1; i++) {
-            point2D a = path.get(i);
-            point2D b = path.get(i + 1);
+            Point2D a = path.get(i);
+            Point2D b = path.get(i + 1);
             double d = pointToSegmentDistance(x, y, a.getX(), a.getY(), b.getX(), b.getY());
             if (d < minDist) minDist = d;
         }
@@ -109,8 +109,8 @@ public class GameMap {
         
         g.setColor(Color.YELLOW);
         for (int i = 0; i < path.size() - 1; i++) {
-            point2D current = path.get(i);
-            point2D next = path.get(i + 1);
+            Point2D current = path.get(i);
+            Point2D next = path.get(i + 1);
             Graphics2D g2d = (Graphics2D) g;
             BasicStroke thickStroke = new BasicStroke(10.0f); 
             g2d.setStroke(thickStroke);
