@@ -5,7 +5,7 @@ public class KingTowerDefense3000 extends JFrame {
     private GamePanel gamePanel;
     private EnemyManager enemyManager;
     private Timer gameTimer;
-    private TowerManager towerManager = new TowerManager();
+    private TowerManager TowerManager = new TowerManager();
     private int numberOfWaves = 5;
     
     public KingTowerDefense3000() {
@@ -15,15 +15,15 @@ public class KingTowerDefense3000 extends JFrame {
         
         map = new GameMap(1000, 800);
 
-        towerManager = new TowerManager();
-        towerManager.addMoney(200);
+        TowerManager = new TowerManager();
+        TowerManager.addMoney(200);
 
         String routeCode = "RRRRRRRRRRRRRDDDDDDDDDDDDDDDDDDDDDDDRRRRRRRRRRRRRRRRRRUUUUUUUUUUUUUUUUUUUUUUURRRRRRRRRRRRRDDDDDDDDDDDDDDDDDDDRRRRRRRR";
         map.setPath(routeCode, 0, 185);
 
         enemyManager = new EnemyManager(map.getPath());
         
-        gamePanel = new GamePanel(map, enemyManager, towerManager); 
+        gamePanel = new GamePanel(map, enemyManager, TowerManager); 
         
         gamePanel.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent e) {
@@ -51,12 +51,12 @@ public class KingTowerDefense3000 extends JFrame {
         
         Tower tower = new Tower(25, 100, 10, 50);
         
-        if (towerManager.placeTower(tower, x, adjustedY)) {
-            System.out.println("Tower placed at (" + x + ", " + adjustedY + ")! Money: " + towerManager.getMoney());
+        if (TowerManager.placeTower(tower, x, adjustedY)) {
+            System.out.println("Tower placed at (" + x + ", " + adjustedY + ")! Money: " + TowerManager.getMoney());
             gamePanel.repaint();
         } 
         else {
-            System.out.println("Not enough money! Need: " + tower.getCost() + ", Have: " + towerManager.getMoney());
+            System.out.println("Not enough money! Need: " + tower.getCost() + ", Have: " + TowerManager.getMoney());
         }
     }
 
@@ -67,8 +67,8 @@ public class KingTowerDefense3000 extends JFrame {
     }
     
     private void updateGame() {
-        enemyManager.updateEnemies(towerManager);
-        towerManager.updateTowers(enemyManager.getEnemies());
+        enemyManager.updateEnemies(TowerManager);
+        TowerManager.updateTowers(enemyManager.getEnemies());
         
         if (enemyManager.isWaveComplete() && enemyManager.getCurrentWave() < numberOfWaves) {
             enemyManager.spawnWave();

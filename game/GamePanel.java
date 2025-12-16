@@ -6,15 +6,15 @@ import javax.imageio.ImageIO;
 import javax.swing.*;
 
 public class GamePanel extends JPanel {
-    private gameMap map;
+    private GameMap map;
     private EnemyManager enemyManager; 
-    private towerManager towerManager;
+    private TowerManager TowerManager;
     private BufferedImage bgImage;
     
-    public GamePanel(gameMap map, EnemyManager enemyManager, towerManager towerManager) {
+    public GamePanel(GameMap map, EnemyManager enemyManager, TowerManager TowerManager) {
         this.map = map;
         this.enemyManager = enemyManager; 
-        this.towerManager = towerManager;
+        this.TowerManager = TowerManager;
         this.setPreferredSize(new Dimension(map.getWidth(), map.getHeight()));
         this.setBackground(Color.GREEN);
         
@@ -33,9 +33,9 @@ public class GamePanel extends JPanel {
         }
         // removed map.drawPath(g); to hide the yellow path
         enemyManager.drawEnemies(g);
-        towerManager.drawTowers(g);
+        TowerManager.drawTowers(g);
 
-        displayMoney(g, towerManager.getMoney());
+        displayMoney(g, TowerManager.getMoney());
     }
 
     public void displayMoney(Graphics g, int money) {
