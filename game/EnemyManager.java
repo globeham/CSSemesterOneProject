@@ -38,40 +38,52 @@ public class EnemyManager {
 
     // simple factory - tweak stats and patterns to taste
     private Enemy createEnemyForWave(int wave, int index) {
-        // wave 1-2: bluejays (fast, low hp)
+        // wave 1-2: Bluejays (fast, low hp)
         if (wave <= 2) {
             return new Bluejay(40, 5, 3, path);
         }
-        // wave 3-4: mix bluejays and robins (medium)
+        // wave 3-4: mix Bluejays and Robins (medium)
         if (wave <= 4) {
             if (index % 3 == 0) return new Robin(80, 10, 2, path);
             return new Bluejay(50, 6, 3, path);
         }
-        // wave 5+: introduce stronger cardinals
+        // wave 5+: introduce stronger Cardinals
         if (wave <= 6) {
             if (index % 6 == 0) return new Cardinal(200, 25, 2, path);
             if (index % 2 == 0) return new Robin(90, 12, 2, path);
             return new Bluejay(60, 8, 3, path);
         }
-        // wave 7+: use sparrows
+        // wave 7+: use Sparrows
         if (wave <= 10) {   
+<<<<<<< HEAD
             if (index % 6 == 0) return new Cardinal(300, 25, 2, path);
+=======
+            if (index % 6 == 0) return new Cardinal(200, 25, 2, path);
+>>>>>>> a3597442a80f244a9bf313773141438f8ebed649
             if (index % 2 == 0) return new Robin(90, 12, 2, path);
             if (index % 7 == 0) return new Sparrow(500, 50, 2, path);
             return new Bluejay(60, 8, 3, path);
         }
-        // wave 11+: more sparrows and white
+        // wave 11+: more Sparrows and White
         else {
+<<<<<<< HEAD
         if (index % 5 == 0) return new Sparrow(500, 50, 2, path);
         if (index % 3 == 0) return new Cardinal(300, 25, 2, path);
         if (index % 7 == 0) return new White(800, 100, 2, path);
         if (index % 2 == 0) return new Robin(150, 12, 2, path);
         return new Bluejay(60, 8, 3, path);         
+=======
+            if (index % 5 == 0) return new Sparrow(400, 50, 2, path);
+            if (index % 3 == 0) return new Cardinal(200, 25, 2, path);
+            if (index % 7 == 0) return new White(800, 100, 2, path);
+            if (index % 2 == 0) return new Robin(90, 12, 2, path);
+            return new Bluejay(60, 8, 3, path);     
+>>>>>>> a3597442a80f244a9bf313773141438f8ebed649
         }
     }
 
     // removes dead enemies and enemies that have reached the end of the path
-    public void updateEnemies(towerManager towerManager) {
+    public void updateEnemies(TowerManager TowerManager) {
         if (enemies == null || enemies.isEmpty()) return;
 
         java.util.Iterator<Enemy> it = enemies.iterator();
@@ -82,7 +94,7 @@ public class EnemyManager {
 
             // if enemy died, award money and remove
             if (!enemy.isAlive()) {
-                towerManager.addMoneyFromEnemy(enemy);
+                TowerManager.addMoneyFromEnemy(enemy);
                 it.remove();
                 continue;
             }
