@@ -45,4 +45,8 @@ public class TowerManager {
             tower.draw(g);
         }
     }
+
+    public void addMoneyFromEnemy(Enemy enemy) {
+        money += enemy.getReward();
+    }
 }

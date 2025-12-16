@@ -89,6 +89,9 @@ public class Enemy {
     public int getY() {
         return y;
     }
+    public int getReward() {
+        return reward;
+    }
 
     // sets distance traveled by enemy
     public void setDistanceTraveled(int distance) {
@@ -122,5 +125,10 @@ public class Enemy {
     // getter for path
     public ArrayList<Point2D> getPath() {
         return path;
+    }
+
+    // getter for health
+    public int getHealth() {
+        return health;      
     }
 }

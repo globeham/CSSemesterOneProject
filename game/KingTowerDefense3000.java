@@ -1,5 +1,4 @@
 import javax.swing.*;
-import java.awt.*;
 
 public class KingTowerDefense3000 extends JFrame {
     private gameMap map;
@@ -50,7 +49,7 @@ public class KingTowerDefense3000 extends JFrame {
             return;
         }
         
-        Tower tower = new Tower(30, 100, 10, 50, Color.BLUE);
+        Tower tower = new Tower(25, 100, 10, 50);
         
         if (towerManager.placeTower(tower, x, adjustedY)) {
             System.out.println("Tower placed at (" + x + ", " + adjustedY + ")! Money: " + towerManager.getMoney());
@@ -68,7 +67,8 @@ public class KingTowerDefense3000 extends JFrame {
     }
     
     private void updateGame() {
-        enemyManager.updateEnemies();
+        enemyManager.updateEnemies(towerManager);
+        towerManager.updateTowers(enemyManager.getEnemies());
         
         if (enemyManager.isWaveComplete() && enemyManager.getCurrentWave() < numberOfWaves) {
             enemyManager.spawnWave();
