@@ -5,13 +5,13 @@ import java.io.IOException;
 import java.util.ArrayList;
 import javax.imageio.ImageIO;
 
-public class robin extends Enemy {
-    public robin(int health, int reward, int speed, ArrayList<point2D> path) {
+public class Robin extends Enemy {
+    public Robin(int health, int reward, int speed, ArrayList<Point2D> path) {
         super(health, reward, speed, path, Color.green); // fallback color
         try {
             this.image = ImageIO.read(new File("images/bird_3_robin.png"));
         } catch (IOException e) {
-            System.out.println("Could not load bluejay image: " + e.getMessage());
+            System.out.println("Could not load robin image: " + e.getMessage());
         }
     }
 

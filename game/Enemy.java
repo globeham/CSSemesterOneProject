@@ -12,13 +12,13 @@ public class Enemy {
     private int speed;
     private int x,y;
     private int pathIndex;
-    private ArrayList<point2D> path;
+    private ArrayList<Point2D> path;
     private Color color;
     protected BufferedImage image;
     protected int drawSize = 32;
 
     // constructor for enemy class
-    public Enemy(int health, int reward, int speed, ArrayList<point2D> path, Color color) {
+    public Enemy(int health, int reward, int speed, ArrayList<Point2D> path, Color color) {
         this.health = health;
         this.reward = reward;
         this.speed = speed;
@@ -27,7 +27,7 @@ public class Enemy {
         this.image = image;
         this.pathIndex = 0;
 
-        point2D start = path.get(0);
+        Point2D start = path.get(0);
         this.x = start.getX();
         this.y = start.getY();
     }
@@ -36,7 +36,7 @@ public class Enemy {
     // moves the enemy along the path
     public void move() {
         if (pathIndex < path.size() - 1) {
-            point2D target = path.get(pathIndex + 1);
+            Point2D target = path.get(pathIndex + 1);
             int targetX = target.getX();
             int targetY = target.getY();
 
@@ -98,8 +98,8 @@ public class Enemy {
         y = path.get(0).getY();
 
         while (pathIndex < path.size() - 1 && traveled < distance) {
-            point2D current = path.get(pathIndex);
-            point2D next = path.get(pathIndex + 1);
+            Point2D current = path.get(pathIndex);
+            Point2D next = path.get(pathIndex + 1);
             int segmentLength = (int)Math.sqrt(Math.pow(next.getX() - current.getX(), 2) + Math.pow(next.getY() - current.getY(), 2));
 
             if (traveled + segmentLength <= distance) {
@@ -120,7 +120,7 @@ public class Enemy {
     }
 
     // getter for path
-    public ArrayList<point2D> getPath() {
+    public ArrayList<Point2D> getPath() {
         return path;
     }
 }

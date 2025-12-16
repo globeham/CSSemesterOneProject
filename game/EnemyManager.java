@@ -7,13 +7,13 @@ import javax.swing.*;
 
 
 public class EnemyManager {
-    private ArrayList<point2D> path;
+    private ArrayList<Point2D> path;
     private int currentWave;
     private ArrayList<Enemy> enemies;
     private Timer enemySpawnTimer;
 
     // constructor for enemy manager
-    public EnemyManager(ArrayList<point2D> path) {
+    public EnemyManager(ArrayList<Point2D> path) {
         this.path = path;
         this.currentWave = 0;
         this.enemies = new ArrayList<Enemy>();
@@ -67,8 +67,8 @@ public class EnemyManager {
 
     // returns true if the enemy has reached the end of the path
     private boolean enemyReachedEnd(Enemy enemy) {
-        ArrayList<point2D> pathPoints = enemy.getPath();
-        point2D lastPoint = pathPoints.get(pathPoints.size() - 1);
+        ArrayList<Point2D> pathPoints = enemy.getPath();
+        Point2D lastPoint = pathPoints.get(pathPoints.size() - 1);
         return enemy.getX() == lastPoint.getX() && enemy.getY() == lastPoint.getY();
     }
 

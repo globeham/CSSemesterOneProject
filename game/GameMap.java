@@ -5,15 +5,15 @@ import java.awt.*;
 import javax.swing.*;
 import java.util.ArrayList;
 
-public class gameMap {
+public class GameMap {
     private int width;
     private int height;
-    private ArrayList<point2D> path;
+    private ArrayList<Point2D> path;
     
-    public gameMap(int initWidth, int initHeight) {
+    public GameMap(int initWidth, int initHeight) {
         this.width = initWidth;
         this.height = initHeight;
-        this.path = new ArrayList<point2D>();
+        this.path = new ArrayList<Point2D>();
     }
     
     // Creates path from routeCode and sets it as the map's path
@@ -22,11 +22,11 @@ public class gameMap {
     }
     
     // Creates and returns a path from the given routeCode
-    public ArrayList<point2D> createPath(String routeCode, int startX, int startY) {
-        ArrayList<point2D> newPath = new ArrayList<point2D>();
+    public ArrayList<Point2D> createPath(String routeCode, int startX, int startY) {
+        ArrayList<Point2D> newPath = new ArrayList<Point2D>();
         
         // Add starting point
-        newPath.add(new point2D(startX, startY));
+        newPath.add(new Point2D(startX, startY));
         
         int currentX = startX;
         int currentY = startY;
@@ -49,7 +49,7 @@ public class gameMap {
                     currentX += 20;
                     break;
             }
-            newPath.add(new point2D(currentX, currentY));
+            newPath.add(new Point2D(currentX, currentY));
         }
         return newPath;
     }
@@ -91,7 +91,7 @@ public class gameMap {
     }
     
     // Getters
-    public ArrayList<point2D> getPath() {
+    public ArrayList<Point2D> getPath() {
         return path;
     }
     

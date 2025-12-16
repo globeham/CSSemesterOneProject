@@ -14,9 +14,9 @@ public class KingTowerDefense3000 extends JFrame {
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setResizable(false);
         
-        map = new gameMap(1000, 800);
+        map = new GameMap(1000, 800);
 
-        towerManager = new towerManager();
+        towerManager = new TowerManager();
         towerManager.addMoney(200);
 
         String routeCode = "RRRRRRRRRRRRRDDDDDDDDDDDDDDDDDDDDDDDRRRRRRRRRRRRRRRRRRUUUUUUUUUUUUUUUUUUUUUUURRRRRRRRRRRRRDDDDDDDDDDDDDDDDDDDRRRRRRRR";

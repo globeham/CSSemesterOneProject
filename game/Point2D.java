@@ -3,13 +3,13 @@ Helper class with point methods
 basically used to make paths and decide where enemies go i think
 */
 
-public class point2D {
+public class Point2D {
     // x and y variables
     private int x;
     private int y;
 
     // constructor for a coordinate point
-    public point2D(int initX, int initY) {
+    public Point2D(int initX, int initY) {
         this.x = initX;
         this.y = initY;
     }

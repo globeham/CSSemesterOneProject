@@ -5,13 +5,13 @@ import java.io.IOException;
 import java.util.ArrayList;
 import javax.imageio.ImageIO;
 
-public class cardinal extends Enemy {
-    public cardinal(int health, int reward, int speed, ArrayList<point2D> path) {
+public class Cardinal extends Enemy {
+    public Cardinal(int health, int reward, int speed, ArrayList<Point2D> path) {
         super(health, reward, speed, path, Color.red); // fallback color
         try {
             this.image = ImageIO.read(new File("images/bird_2_cardinal.png"));
         } catch (IOException e) {
-            System.out.println("Could not load bluejay image: " + e.getMessage());
+            System.out.println("Could not load cardinal image: " + e.getMessage());
         }
     }
 

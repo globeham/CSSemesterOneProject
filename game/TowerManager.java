@@ -1,11 +1,11 @@
 import java.awt.Graphics;
 import java.util.ArrayList;
 
-public class towerManager {
+public class TowerManager {
     private ArrayList<Tower> towers;
     private int money = 0;
     
-    public towerManager() {
+    public TowerManager() {
         towers = new ArrayList<>();
     }
     
