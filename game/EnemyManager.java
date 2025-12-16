@@ -55,33 +55,18 @@ public class EnemyManager {
         }
         // wave 7+: use sparrows
         if (wave <= 10) {   
-<<<<<<< HEAD
-            if (index % 6 == 0) return new Cardinal(200, 25, 2, path);
+            if (index % 6 == 0) return new Cardinal(300, 25, 2, path);
             if (index % 2 == 0) return new Robin(90, 12, 2, path);
-            if (index % 7 == 0) return new Sparrow(400, 50, 2, path);
+            if (index % 7 == 0) return new Sparrow(500, 50, 2, path);
             return new Bluejay(60, 8, 3, path);
         }
         // wave 11+: more sparrows and white
         else {
-        if (index % 5 == 0) return new Sparrow(400, 50, 2, path);
-        if (index % 3 == 0) return new Cardinal(200, 25, 2, path);
+        if (index % 5 == 0) return new Sparrow(500, 50, 2, path);
+        if (index % 3 == 0) return new Cardinal(300, 25, 2, path);
         if (index % 7 == 0) return new White(800, 100, 2, path);
-        if (index % 2 == 0) return new Robin(90, 12, 2, path);
+        if (index % 2 == 0) return new Robin(150, 12, 2, path);
         return new Bluejay(60, 8, 3, path);         
-=======
-            if (index % 6 == 0) return new cardinal(300, 25, 2, path);
-            if (index % 2 == 0) return new robin(90, 12, 2, path);
-            if (index % 7 == 0) return new sparrow(500, 50, 2, path);
-            return new bluejay(60, 8, 3, path);
-        }
-        // wave 11+: more sparrows and white
-        else {
-        if (index % 5 == 0) return new sparrow(500, 50, 2, path);
-        if (index % 3 == 0) return new cardinal(300, 25, 2, path);
-        if (index % 7 == 0) return new white(800, 100, 2, path);
-        if (index % 2 == 0) return new robin(150, 12, 2, path);
-        return new bluejay(60, 8, 3, path);         
->>>>>>> 8752108e5e86a9f15d97d3521bc8e618fcecfe86
         }
     }
 
