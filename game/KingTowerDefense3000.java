@@ -1,11 +1,11 @@
 import javax.swing.*;
 
 public class KingTowerDefense3000 extends JFrame {
-    private gameMap map;
+    private GameMap map;
     private GamePanel gamePanel;
     private EnemyManager enemyManager;
     private Timer gameTimer;
-    private towerManager towerManager = new towerManager();
+    private TowerManager towerManager = new TowerManager();
     private int numberOfWaves = 5;
     
     public KingTowerDefense3000() {

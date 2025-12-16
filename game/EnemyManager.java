@@ -40,33 +40,33 @@ public class EnemyManager {
     private Enemy createEnemyForWave(int wave, int index) {
         // wave 1-2: bluejays (fast, low hp)
         if (wave <= 2) {
-            return new bluejay(40, 5, 3, path);
+            return new Bluejay(40, 5, 3, path);
         }
         // wave 3-4: mix bluejays and robins (medium)
         if (wave <= 4) {
-            if (index % 3 == 0) return new robin(80, 10, 2, path);
-            return new bluejay(50, 6, 3, path);
+            if (index % 3 == 0) return new Robin(80, 10, 2, path);
+            return new Bluejay(50, 6, 3, path);
         }
         // wave 5+: introduce stronger cardinals
         if (wave <= 6) {
-            if (index % 6 == 0) return new cardinal(200, 25, 2, path);
-            if (index % 2 == 0) return new robin(90, 12, 2, path);
-            return new bluejay(60, 8, 3, path);
+            if (index % 6 == 0) return new Cardinal(200, 25, 2, path);
+            if (index % 2 == 0) return new Robin(90, 12, 2, path);
+            return new Bluejay(60, 8, 3, path);
         }
         // wave 7+: use sparrows
         if (wave <= 10) {   
-            if (index % 6 == 0) return new cardinal(200, 25, 2, path);
-            if (index % 2 == 0) return new robin(90, 12, 2, path);
-            if (index % 7 == 0) return new sparrow(400, 50, 2, path);
-            return new bluejay(60, 8, 3, path);
+            if (index % 6 == 0) return new Cardinal(200, 25, 2, path);
+            if (index % 2 == 0) return new Robin(90, 12, 2, path);
+            if (index % 7 == 0) return new Sparrow(400, 50, 2, path);
+            return new Bluejay(60, 8, 3, path);
         }
         // wave 11+: more sparrows and white
         else {
-        if (index % 5 == 0) return new sparrow(400, 50, 2, path);
-        if (index % 3 == 0) return new cardinal(200, 25, 2, path);
-        if (index % 7 == 0) return new white(800, 100, 2, path);
-        if (index % 2 == 0) return new robin(90, 12, 2, path);
-        return new bluejay(60, 8, 3, path);         
+        if (index % 5 == 0) return new Sparrow(400, 50, 2, path);
+        if (index % 3 == 0) return new Cardinal(200, 25, 2, path);
+        if (index % 7 == 0) return new White(800, 100, 2, path);
+        if (index % 2 == 0) return new Robin(90, 12, 2, path);
+        return new Bluejay(60, 8, 3, path);         
         }
     }
 
