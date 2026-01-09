@@ -49,13 +49,77 @@ public class KingTowerDefense3000 extends JFrame {
             return;
         }
         
-        Tower tower = new Tower(25, 100, 10, 50);
+        // Create tower options with images
+        String[] towerNames = {"Knight", "Devil", "King", "Ninja", "Wizard"};
+        String[] towerImages = {
+            "images/knight.gif",
+            "images/devil.gif",
+            "images/king.gif",
+            "images/ninja.gif",
+            "images/wizard.gif"
+        };
         
-        if (TowerManager.placeTower(tower, x, adjustedY)) {
+        Icon[] icons = new Icon[5];
+        for (int i = 0; i < 5; i++) {
+            try {
+                icons[i] = new ImageIcon(towerImages[i]);
+            } catch (Exception e) {
+                icons[i] = null;
+            }
+        }
+        
+        // Create button array with icons and labels
+        Object[] buttons = new Object[5];
+        buttons[0] = new JButton("Knight");
+        buttons[1] = new JButton("Devil");
+        buttons[2] = new JButton("King");
+        buttons[3] = new JButton("Ninja");
+        buttons[4] = new JButton("Wizard");
+        
+        for (int i = 0; i < 5; i++) {
+            if (icons[i] != null) {
+                ((JButton)buttons[i]).setIcon(icons[i]);
+            }
+            ((JButton)buttons[i]).setFocusPainted(false);
+        }
+        
+        int choice = JOptionPane.showOptionDialog(this,
+                "Choose a tower to place:",
+                "Tower Selection",
+                JOptionPane.YES_NO_CANCEL_OPTION,
+                JOptionPane.QUESTION_MESSAGE,
+                null,
+                buttons,
+                buttons[0]);
+        
+        if (choice == -1) {
+            return; // User cancelled
+        }
+        
+        Tower tower = null;
+        switch (choice) {
+            case 0: // Knight
+                tower = new Knight(0, 0, 0, 0, null);
+                break;
+            case 1: // Devil
+                tower = new Devil(0, 0, 0, 0, null);
+                break;
+            case 2: // King
+                tower = new King(0, 0, 0, 0, null);
+                break;
+            case 3: // Ninja
+                tower = new Ninja(0, 0, 0, 0, null);
+                break;
+            case 4: // Wizard
+                tower = new Wizard(0, 0, 0, 0, null);
+                break;
+        }
+        
+        if (tower != null && TowerManager.placeTower(tower, x, adjustedY)) {
             System.out.println("Tower placed at (" + x + ", " + adjustedY + ")! Money: " + TowerManager.getMoney());
             gamePanel.repaint();
         } 
-        else {
+        else if (tower != null) {
             System.out.println("Not enough money! Need: " + tower.getCost() + ", Have: " + TowerManager.getMoney());
         }
     }
