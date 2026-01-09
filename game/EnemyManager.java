@@ -11,6 +11,7 @@ public class EnemyManager {
     private int currentWave;
     private ArrayList<Enemy> enemies;
     private Timer enemySpawnTimer;
+    private int health = 100;
 
     // constructor for enemy manager
     public EnemyManager(ArrayList<Point2D> path) {
@@ -90,6 +91,19 @@ public class EnemyManager {
 
             // if enemy reached the end, remove (no reward)
             if (enemyReachedEnd(enemy)) {
+                health-=100;
+                System.out.println(health);
+                if(health==0) {
+                    System.out.println("Game Over! You've run out of health.");
+                    int playAgain = JOptionPane.showConfirmDialog(null, "Game Over! You've run out of health. Play Again?", "Game Over", JOptionPane.YES_NO_OPTION);
+                    if (playAgain == JOptionPane.YES_OPTION) {
+                        // Restart the game
+                        KingTowerDefense3000 newGame = new KingTowerDefense3000();
+                    } else {
+                        // Exit the game
+                        System.exit(0);
+                    }
+                }
                 it.remove();
             }
         }
@@ -123,4 +137,10 @@ public class EnemyManager {
     public int getCurrentWave() {
         return currentWave;
     }
+
+    // returns current health`
+    public int getHealth() {
+        return health;
+    }
+
 }

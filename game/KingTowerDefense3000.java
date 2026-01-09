@@ -67,6 +67,7 @@ public class KingTowerDefense3000 extends JFrame {
     }
     
     private void updateGame() {
+
         enemyManager.updateEnemies(TowerManager);
         TowerManager.updateTowers(enemyManager.getEnemies());
         

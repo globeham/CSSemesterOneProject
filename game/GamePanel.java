@@ -36,11 +36,18 @@ public class GamePanel extends JPanel {
         TowerManager.drawTowers(g);
 
         displayMoney(g, TowerManager.getMoney());
+        displayHealth(g, enemyManager.getHealth());
     }
 
     public void displayMoney(Graphics g, int money) {
         g.setColor(Color.BLACK);
         g.setFont(new Font("Arial", Font.BOLD, 16));
-        g.drawString("" + money, 10, 20);
+        g.drawString("Money: " + money, 10, 20);
+    }
+
+    public void displayHealth(Graphics g, int health) {
+        g.setColor(Color.BLACK);
+        g.setFont(new Font("Arial", Font.BOLD, 16));
+        g.drawString("Health: " + health, 10, 40);
     }
 }
