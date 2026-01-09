@@ -37,7 +37,7 @@ public class EnemyManager {
         }
     }
 
-    // simple factory - tweak stats and patterns to taste
+    // method creates waves of enemies
     private Enemy createEnemyForWave(int wave, int index) {
         // wave 1-2: Bluejays (fast, low hp)
         if (wave <= 2) {

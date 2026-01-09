@@ -1,5 +1,10 @@
 import java.awt.*;
 import java.util.ArrayList;
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
+import java.util.ArrayList;
+import javax.imageio.ImageIO;
 
 public class Tower {
     private int shootingSpeed;
@@ -15,7 +20,6 @@ public class Tower {
         this.shootingSpeed = speed;
         this.radius = radius;
         this.damage = damage;
-        this.color = color;
         this.cost = cost;
     }
 
