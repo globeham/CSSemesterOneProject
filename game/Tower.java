@@ -15,6 +15,7 @@ public class Tower {
     private int cost;
     private int shotCooldown;
     private int pulse = 0;
+    private java.awt.image.BufferedImage image;
 
     public Tower(int speed, int radius, int damage, int cost) {
         this.shootingSpeed = speed;
@@ -67,9 +68,19 @@ public class Tower {
             g.setColor(Color.RED);
             g.drawOval(x - radius - pulse, y - radius - pulse, 2 * (radius + pulse), 2 * (radius + pulse));
         }
-        g.setColor(color);
-        g.fillOval(x - 10, y - 10, 20, 20);
-        g.fillOval(x -5, y-5, 10, 10);
+        if (image != null) {
+            int iw = image.getWidth();
+            int ih = image.getHeight();
+            g.drawImage(image, x - iw/2, y - ih/2, null);
+        } else {
+            g.setColor(color == null ? Color.GRAY : color);
+            g.fillOval(x - 10, y - 10, 20, 20);
+            g.fillOval(x -5, y-5, 10, 10);
+        }
+    }
+
+    public void setImage(java.awt.image.BufferedImage img) {
+        this.image = img;
     }
 
     public int getX() {

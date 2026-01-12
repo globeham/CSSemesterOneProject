@@ -6,6 +6,9 @@ public class KingTowerDefense3000 extends JFrame {
     private EnemyManager enemyManager;
     private Timer gameTimer;
     private TowerManager TowerManager = new TowerManager();
+    private javax.swing.JButton startWaveButton;
+    private javax.swing.JLabel waveLabel;
+    private javax.swing.JPanel controlPanel;
     private int numberOfWaves = 5;
     
     public KingTowerDefense3000() {
@@ -31,13 +34,27 @@ public class KingTowerDefense3000 extends JFrame {
             }
         });
         add(gamePanel);
+        // Control panel with Start Wave button
+        controlPanel = new JPanel();
+        waveLabel = new JLabel("Wave: " + enemyManager.getCurrentWave() + "/" + numberOfWaves);
+        startWaveButton = new JButton("Start Wave");
+        startWaveButton.addActionListener(e -> {
+            if (enemyManager.getCurrentWave() < numberOfWaves && enemyManager.isWaveComplete()) {
+                enemyManager.spawnWave();
+                startWaveButton.setEnabled(false);
+                updateWaveLabel();
+                gamePanel.repaint();
+            }
+        });
+        controlPanel.add(waveLabel);
+        controlPanel.add(startWaveButton);
+        add(controlPanel, java.awt.BorderLayout.SOUTH);
         
         pack();
         setLocationRelativeTo(null); 
         setVisible(true);
 
         startGameLoop();
-        enemyManager.spawnWave();
     }
 
     private void placeTower(int x, int y) {
@@ -49,79 +66,47 @@ public class KingTowerDefense3000 extends JFrame {
             return;
         }
         
-        // Create tower options with images
-        String[] towerNames = {"Knight", "Devil", "King", "Ninja", "Wizard"};
-        String[] towerImages = {
-            "images/knight.gif",
-            "images/devil.gif",
-            "images/king.gif",
-            "images/ninja.gif",
-            "images/wizard.gif"
-        };
-        
-        Icon[] icons = new Icon[5];
+        // Build a small dialog with buttons that place the tower immediately on click
+        final int fx = x;
+        final int fy = adjustedY;
+        String[] towerImages = {"images/knight.png", "images/devil.png", "images/king.png", "images/ninja.png", "images/wizard.png"};
+        JPanel panel = new JPanel(new java.awt.GridLayout(1, 5, 8, 8));
+
+        JDialog dialog = new JDialog(this, "Choose a tower to place:", true);
         for (int i = 0; i < 5; i++) {
+            String name;
+            Tower created;
+            switch (i) {
+                case 0: name = "Knight"; created = new Knight(0,0,0,0,null); break;
+                case 1: name = "Devil"; created = new Devil(0,0,0,0,null); break;
+                case 2: name = "King"; created = new King(0,0,0,0,null); break;
+                case 3: name = "Ninja"; created = new Ninja(0,0,0,0,null); break;
+                default: name = "Wizard"; created = new Wizard(0,0,0,0,null); break;
+            }
+
+            JButton b = new JButton(name);
             try {
-                icons[i] = new ImageIcon(towerImages[i]);
-            } catch (Exception e) {
-                icons[i] = null;
+                b.setIcon(new ImageIcon(towerImages[i]));
+            } catch (Exception ex) {
+                // ignore icon load errors
             }
+            b.setFocusPainted(false);
+            Tower toPlace = created;
+            b.addActionListener(ev -> {
+                if (TowerManager.placeTower(toPlace, fx, fy)) {
+                    gamePanel.repaint();
+                } else {
+                    JOptionPane.showMessageDialog(this, "Not enough money to place tower.");
+                }
+                dialog.dispose();
+            });
+            panel.add(b);
         }
-        
-        // Create button array with icons and labels
-        Object[] buttons = new Object[5];
-        buttons[0] = new JButton("Knight");
-        buttons[1] = new JButton("Devil");
-        buttons[2] = new JButton("King");
-        buttons[3] = new JButton("Ninja");
-        buttons[4] = new JButton("Wizard");
-        
-        for (int i = 0; i < 5; i++) {
-            if (icons[i] != null) {
-                ((JButton)buttons[i]).setIcon(icons[i]);
-            }
-            ((JButton)buttons[i]).setFocusPainted(false);
-        }
-        
-        int choice = JOptionPane.showOptionDialog(this,
-                "Choose a tower to place:",
-                "Tower Selection",
-                JOptionPane.YES_NO_CANCEL_OPTION,
-                JOptionPane.QUESTION_MESSAGE,
-                null,
-                buttons,
-                buttons[0]);
-        
-        if (choice == -1) {
-            return; // User cancelled
-        }
-        
-        Tower tower = null;
-        switch (choice) {
-            case 0: // Knight
-                tower = new Knight(0, 0, 0, 0, null);
-                break;
-            case 1: // Devil
-                tower = new Devil(0, 0, 0, 0, null);
-                break;
-            case 2: // King
-                tower = new King(0, 0, 0, 0, null);
-                break;
-            case 3: // Ninja
-                tower = new Ninja(0, 0, 0, 0, null);
-                break;
-            case 4: // Wizard
-                tower = new Wizard(0, 0, 0, 0, null);
-                break;
-        }
-        
-        if (tower != null && TowerManager.placeTower(tower, x, adjustedY)) {
-            System.out.println("Tower placed at (" + x + ", " + adjustedY + ")! Money: " + TowerManager.getMoney());
-            gamePanel.repaint();
-        } 
-        else if (tower != null) {
-            System.out.println("Not enough money! Need: " + tower.getCost() + ", Have: " + TowerManager.getMoney());
-        }
+
+        dialog.getContentPane().add(panel);
+        dialog.pack();
+        dialog.setLocationRelativeTo(this);
+        dialog.setVisible(true);
     }
 
 
@@ -134,12 +119,26 @@ public class KingTowerDefense3000 extends JFrame {
 
         enemyManager.updateEnemies(TowerManager);
         TowerManager.updateTowers(enemyManager.getEnemies());
-        
-        if (enemyManager.isWaveComplete() && enemyManager.getCurrentWave() < numberOfWaves) {
-            enemyManager.spawnWave();
+
+        // If the wave is complete, enable Start Wave button (unless we've finished all waves)
+        if (enemyManager.isWaveComplete()) {
+            if (enemyManager.getCurrentWave() < numberOfWaves) {
+                startWaveButton.setEnabled(true);
+            } else {
+                startWaveButton.setEnabled(false);
+                startWaveButton.setText("All Waves Spawned");
+            }
         }
-            
-            gamePanel.repaint();
+
+        updateWaveLabel();
+
+        gamePanel.repaint();
+    }
+
+    private void updateWaveLabel() {
+        if (waveLabel != null && enemyManager != null) {
+            waveLabel.setText("Wave: " + enemyManager.getCurrentWave() + "/" + numberOfWaves);
+        }
     }
     
     public static void main(String[] args) {

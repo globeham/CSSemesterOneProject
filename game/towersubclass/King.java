@@ -11,9 +11,10 @@ import javax.imageio.ImageIO;
 public class King extends Tower {
     private BufferedImage image;
     public King(int speed, int radius, int damage, int cost, BufferedImage image) {
-        super(30, 100, 15, 75); // speed, radius, damage, cost, color
+        super(30, 150, 25, 200); // speed, radius, damage, cost, color
         try {
-            this.image = ImageIO.read(new File("images/king.gif"));
+            this.image = ImageIO.read(new File("images/king.png"));
+            setImage(this.image);
         } catch (IOException e) {
             System.out.println("Could not load king image: " + e.getMessage());
         }
