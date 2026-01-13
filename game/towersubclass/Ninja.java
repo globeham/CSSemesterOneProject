@@ -11,7 +11,7 @@ import javax.imageio.ImageIO;
 public class Ninja extends Tower {
     private BufferedImage image;
     public Ninja(int speed, int radius, int damage, int cost, BufferedImage image) {
-        super(30, 100, 25, 150); // speed, radius, damage, cost, color
+        super(18, 110, 14, 200); // cost: 200
         try {
             this.image = ImageIO.read(new File("images/ninja.png"));
             setImage(this.image);

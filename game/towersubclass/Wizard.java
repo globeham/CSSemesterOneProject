@@ -11,7 +11,7 @@ import javax.imageio.ImageIO;
 public class Wizard extends Tower {
     private BufferedImage image;
     public Wizard(int speed, int radius, int damage, int cost, BufferedImage image) {
-        super(30, 100, 25, 150); // speed, radius, damage, cost, color
+        super(26, 130, 16, 300); // cost: 300
         try {
             this.image = ImageIO.read(new File("images/wizard.png"));
             setImage(this.image);

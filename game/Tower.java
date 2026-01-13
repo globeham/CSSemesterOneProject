@@ -22,6 +22,7 @@ public class Tower {
         this.radius = radius;
         this.damage = damage;
         this.cost = cost;
+        this.shotCooldown = 0;
     }
 
     public void update(ArrayList<Enemy> enemies) {

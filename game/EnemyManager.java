@@ -45,34 +45,33 @@ public class EnemyManager {
     private Enemy createEnemyForWave(int wave, int index) {
         // wave 1-2: Bluejays (fast, low hp)
         if (wave <= 2) {
-            return new Bluejay(40, 5, 3, path);
+            return new Bluejay(22, 5, 3, path);
         }
         // wave 3-4: mix Bluejays and Robins (medium)
         if (wave <= 4) {
-            if (index % 3 == 0) return new Robin(80, 10, 2, path);
-            return new Bluejay(50, 6, 3, path);
+            if (index % 3 == 0) return new Robin(40, 10, 2, path);
+            return new Bluejay(28, 6, 3, path);
         }
         // wave 5+: introduce stronger Cardinals
         if (wave <= 6) {
-            if (index % 6 == 0) return new Cardinal(200, 25, 2, path);
-            if (index % 2 == 0) return new Robin(90, 12, 2, path);
-            return new Bluejay(60, 8, 3, path);
+            if (index % 6 == 0) return new Cardinal(70, 25, 2, path);
+            if (index % 2 == 0) return new Robin(45, 12, 2, path);
+            return new Bluejay(32, 8, 3, path);
         }
         // wave 7+: use Sparrows
         if (wave <= 10) {   
-            if (index % 6 == 0) return new Cardinal(300, 25, 2, path);
-            if (index % 6 == 0) return new Cardinal(200, 25, 2, path);
-            if (index % 2 == 0) return new Robin(90, 12, 2, path);
-            if (index % 7 == 0) return new Sparrow(500, 50, 2, path);
-            return new Bluejay(60, 8, 3, path);
+            if (index % 6 == 0) return new Cardinal(85, 25, 2, path);
+            if (index % 7 == 0) return new Sparrow(100, 50, 2, path);
+            if (index % 2 == 0) return new Robin(55, 12, 2, path);
+            return new Bluejay(40, 8, 3, path);
         }
         // wave 11+: more Sparrows and White
         else {
-            if (index % 5 == 0) return new Sparrow(500, 50, 2, path);
-            if (index % 3 == 0) return new Cardinal(300, 25, 2, path);
-            if (index % 7 == 0) return new White(800, 100, 2, path);
-            if (index % 2 == 0) return new Robin(150, 12, 2, path);
-            return new Bluejay(60, 8, 3, path);           
+            if (index % 5 == 0) return new Sparrow(110, 50, 2, path);
+            if (index % 3 == 0) return new Cardinal(95, 25, 2, path);
+            if (index % 7 == 0) return new White(150, 100, 2, path);
+            if (index % 2 == 0) return new Robin(65, 12, 2, path);
+            return new Bluejay(45, 8, 3, path);           
         }
     }
 
@@ -95,14 +94,14 @@ public class EnemyManager {
 
             // if enemy reached the end, remove (no reward)
             if (enemyReachedEnd(enemy)) {
-                health-=10;
-                System.out.println(health);
-                if(health==0) {
+                health -= 5;  // enemies now do 5 damage instead of 100
+                System.out.println("Enemy reached end! Health: " + health);
+                if(health <= 0) {
                     System.out.println("Game Over! You've run out of health.");
                     int playAgain = JOptionPane.showConfirmDialog(null, "Game Over! You've run out of health. Play Again?", "Game Over", JOptionPane.YES_NO_OPTION);
                     if (playAgain == JOptionPane.YES_OPTION) {
                         // Restart the game
-                        KingTowerDefense3000 newGame = new KingTowerDefense3000();
+                        new KingTowerDefense3000();
                     } else {
                         // Exit the game
                         System.exit(0);

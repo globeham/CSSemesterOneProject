@@ -11,7 +11,7 @@ import javax.imageio.ImageIO;
 public class Knight extends Tower {
     private BufferedImage image;
     public Knight(int speed, int radius, int damage, int cost, BufferedImage image) {
-        super(30, 100, 15, 100); // speed, radius, damage, cost, color
+        super(28, 120, 12, 100); // cost: 100
         try {
             this.image = ImageIO.read(new File("images/knight.png"));
             setImage(this.image);
