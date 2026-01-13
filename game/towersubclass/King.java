@@ -11,7 +11,7 @@ import javax.imageio.ImageIO;
 public class King extends Tower {
     private BufferedImage image;
     public King(int speed, int radius, int damage, int cost, BufferedImage image) {
-        super(30, 150, 25, 200); // speed, radius, damage, cost, color
+        super(20, 160, 25, 500); // cost: 500 (most expensive)
         try {
             this.image = ImageIO.read(new File("images/king.png"));
             setImage(this.image);
