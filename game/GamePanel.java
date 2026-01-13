@@ -22,21 +22,39 @@ public class GamePanel extends JPanel {
             bgImage = ImageIO.read(new File("images/kingtowerdefense map1.png"));
         } catch (IOException e) {
             System.out.println("Could not load background image: " + e.getMessage());
+            bgImage = null;
         }
     }
     
-        @Override
+    @Override
     public void paintComponent(Graphics g) {
         super.paintComponent(g);
-        if (bgImage != null) {
-            g.drawImage(bgImage, 0, 0, this.getWidth(), this.getHeight(), null);
-        }
-        // removed map.drawPath(g); to hide the yellow path
-        enemyManager.drawEnemies(g);
-        TowerManager.drawTowers(g);
+        int panelW = this.getWidth();
+        int panelH = this.getHeight();
 
-        displayMoney(g, TowerManager.getMoney());
-        displayHealth(g, enemyManager.getHealth());
+        // draw background image stretched to panel size (keeps old behavior)
+        if (bgImage != null) {
+            g.drawImage(bgImage, 0, 0, panelW, panelH, null);
+        } else {
+            g.setColor(getBackground());
+            g.fillRect(0,0,panelW,panelH);
+        }
+
+        // tell map the current display size so it can scale the original path
+        map.setDisplaySize(panelW, panelH);
+
+        // push the scaled display path into the enemy manager (so it uses display coords)
+        if (enemyManager != null) {
+            enemyManager.setPath(map.getPath());
+        }
+
+        // draw enemies and towers (they expect display coords now)
+        if (enemyManager != null) enemyManager.drawEnemies(g);
+        if (TowerManager != null) TowerManager.drawTowers(g);
+
+        // UI overlays
+        if (TowerManager != null) displayMoney(g, TowerManager.getMoney());
+        if (enemyManager != null) displayHealth(g, enemyManager.getHealth());
     }
 
     public void displayMoney(Graphics g, int money) {

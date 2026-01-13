@@ -1,6 +1,3 @@
-/*
-Class provides a GameMap constructor with path and background image
-*/
 import java.awt.*;
 import javax.swing.*;
 import java.util.ArrayList;
@@ -8,20 +5,33 @@ import java.util.ArrayList;
 public class GameMap {
     private int width;
     private int height;
+
+    // active path used for drawing/collision (in display coords)
     private ArrayList<Point2D> path;
+
+    // original path in base image coordinates (so we can scale it)
+    private ArrayList<Point2D> originalPath;
+    private int originalWidth;
+    private int originalHeight;
     
     public GameMap(int initWidth, int initHeight) {
         this.width = initWidth;
         this.height = initHeight;
         this.path = new ArrayList<Point2D>();
+        this.originalPath = new ArrayList<Point2D>();
+        this.originalWidth = initWidth;   // treat constructor sizes as the base image size
+        this.originalHeight = initHeight;
     }
     
-    // Creates path from routeCode and sets it as the map's path
+    // Creates path from routeCode and stores it as the ORIGINAL path (base coordinates).
+    // The active display path will be the scaled version; call setDisplaySize(...) to generate it.
     public void setPath(String routeCode, int startX, int startY) {
-        this.path = createPath(routeCode, startX, startY);
+        this.originalPath = createPath(routeCode, startX, startY);
+        // initially make display path equal to original (no scaling yet)
+        this.path = new ArrayList<Point2D>(originalPath);
     }
     
-    // Creates and returns a path from the given routeCode
+    // Creates and returns a path from the given routeCode (base coords)
     public ArrayList<Point2D> createPath(String routeCode, int startX, int startY) {
         ArrayList<Point2D> newPath = new ArrayList<Point2D>();
         
@@ -37,7 +47,7 @@ public class GameMap {
             
             switch (direction) {
                 case 'D':
-                currentY += 20;
+                    currentY += 20;
                     break;
                 case 'U':
                     currentY -= 20;
@@ -54,7 +64,27 @@ public class GameMap {
         return newPath;
     }
 
-    // returns the shortest distance from (x,y) to the path (segments)
+    // Call this each time the background image is drawn at a different size.
+    // It scales the original (base) path into the display rectangle (0,0,w,h).
+    public void setDisplaySize(int displayW, int displayH) {
+        this.width = displayW;
+        this.height = displayH;
+        if (originalPath == null || originalPath.size() == 0) {
+            this.path = new ArrayList<Point2D>();
+            return;
+        }
+        double sx = (double) displayW / (double) Math.max(1, originalWidth);
+        double sy = (double) displayH / (double) Math.max(1, originalHeight);
+        ArrayList<Point2D> scaled = new ArrayList<Point2D>(originalPath.size());
+        for (Point2D p : originalPath) {
+            int x = (int) Math.round(p.getX() * sx);
+            int y = (int) Math.round(p.getY() * sy);
+            scaled.add(new Point2D(x, y));
+        }
+        this.path = scaled;
+    }
+
+    // returns the shortest distance from (x,y) to the path (segments) in display coordinates
     public double distanceToPath(int x, int y) {
         if (path == null || path.size() == 0) return Double.MAX_VALUE;
         double minDist = Double.MAX_VALUE;
@@ -91,6 +121,7 @@ public class GameMap {
     }
     
     // Getters
+    // returns currently-active (display) path (already scaled)
     public ArrayList<Point2D> getPath() {
         return path;
     }
@@ -103,19 +134,18 @@ public class GameMap {
         return height;
     }
     
-    // Draw the path on the map
+    // Draw the path on the map (display coordinates)
     public void drawPath(Graphics g) {
-        if (path.size() < 2) return;
+        if (path == null || path.size() < 2) return;
         
         g.setColor(Color.YELLOW);
+        Graphics2D g2d = (Graphics2D) g;
+        BasicStroke thickStroke = new BasicStroke(10.0f); 
+        g2d.setStroke(thickStroke);
         for (int i = 0; i < path.size() - 1; i++) {
             Point2D current = path.get(i);
             Point2D next = path.get(i + 1);
-            Graphics2D g2d = (Graphics2D) g;
-            BasicStroke thickStroke = new BasicStroke(10.0f); 
-            g2d.setStroke(thickStroke);
-            g2d.drawLine(current.getX(), current.getY(), 
-            next.getX(), next.getY());
+            g2d.drawLine(current.getX(), current.getY(), next.getX(), next.getY());
         }
     }
 }

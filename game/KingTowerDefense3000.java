@@ -14,7 +14,7 @@ public class KingTowerDefense3000 extends JFrame {
     public KingTowerDefense3000() {
         setTitle("Tower Defense Game");
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        setResizable(false);
+        setResizable(true);  // Changed from false to true
         
         map = new GameMap(1000, 800);
 
@@ -34,6 +34,7 @@ public class KingTowerDefense3000 extends JFrame {
             }
         });
         add(gamePanel);
+        
         // Control panel with Start Wave button
         controlPanel = new JPanel();
         waveLabel = new JLabel("Wave: " + enemyManager.getCurrentWave() + "/" + numberOfWaves);
@@ -58,17 +59,16 @@ public class KingTowerDefense3000 extends JFrame {
     }
 
     private void placeTower(int x, int y) {
-        int adjustedY = y - getInsets().top;
-
+        // No need to adjust y anymore since we're working in panel coordinates
         int minDistanceFromPath = 50; 
-        if (map.isTooCloseToPath(x, adjustedY, minDistanceFromPath)) {
+        if (map.isTooCloseToPath(x, y, minDistanceFromPath)) {
             System.out.println("Too close to path — place tower further away.");
             return;
         }
         
         // Build a small dialog with buttons that place the tower immediately on click
         final int fx = x;
-        final int fy = adjustedY;
+        final int fy = y;
         String[] towerImages = {"images/knight.png", "images/devil.png", "images/king.png", "images/ninja.png", "images/wizard.png"};
         JPanel panel = new JPanel(new java.awt.GridLayout(1, 5, 8, 8));
 
@@ -116,7 +116,6 @@ public class KingTowerDefense3000 extends JFrame {
     }
     
     private void updateGame() {
-
         enemyManager.updateEnemies(TowerManager);
         TowerManager.updateTowers(enemyManager.getEnemies());
 
@@ -131,7 +130,6 @@ public class KingTowerDefense3000 extends JFrame {
         }
 
         updateWaveLabel();
-
         gamePanel.repaint();
     }
 

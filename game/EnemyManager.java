@@ -5,7 +5,6 @@ import java.awt.*;
 import java.util.ArrayList;
 import javax.swing.*;
 
-
 public class EnemyManager {
     private ArrayList<Point2D> path;
     private int currentWave;
@@ -18,6 +17,11 @@ public class EnemyManager {
         this.path = path;
         this.currentWave = 0;
         this.enemies = new ArrayList<Enemy>();
+    }
+
+    // allow updating the active display path (called from GamePanel after scaling)
+    public void setPath(ArrayList<Point2D> newPath) {
+        this.path = newPath;
     }
 
     public void spawnWave() {
