@@ -1,4 +1,6 @@
 import javax.swing.*;
+import java.awt.*;
+import java.awt.event.ActionListener;
 
 public class KingTowerDefense3000 extends JFrame {
     private GameMap map;
@@ -11,28 +13,74 @@ public class KingTowerDefense3000 extends JFrame {
     private javax.swing.JPanel controlPanel;
     private int numberOfWaves = 5;
     
+    // Map definitions
+    private MenuPanel.MapInfo[] availableMaps = {
+        new MenuPanel.MapInfo("Map 1 - Classic", 
+            "RRRRRRRRRRRRRDDDDDDDDDDDDDDDDDDDDDDDRRRRRRRRRRRRRRRRRRUUUUUUUUUUUUUUUUUUUUUUURRRRRRRRRRRRRDDDDDDDDDDDDDDDDDDDRRRRRRRR",
+            0, 185, "images/kingtowerdefense map1.png"),
+        new MenuPanel.MapInfo("Map 2 - Spiral", 
+            "DDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDRRRRRRRRRRRRUUUUUUUUUUUUUUUULLLLLLLLLLLLLLDDDDDDDDDDDRRRRRRRRRRRRR",
+            162, 0, "images/map2.png"),
+        new MenuPanel.MapInfo("Map 3 - Zigzag", 
+            "RRRRRRRRRRRRRRUUUUUUUUUUUUUUURRRRRRRRRRRRRDDDDDDDDDDDDDDRRRRRRRRRRRRRRUUUUUUUUUUUUUU",
+            50, 200, "images/kingtowerdefense map1.png"),
+        new MenuPanel.MapInfo("Map 4 - S-Curve", 
+            "RRRRRRRRRRRRRRRRRRRRRRRRRRDDDDDDDDUUUUUUUUUUUUUUUUUURRRRRRRRRRRRRRRRRRRRRRDDDDDDDD",
+            0, 100, "images/kingtowerdefense map1.png")
+    };
+    
     public KingTowerDefense3000() {
-        setTitle("Tower Defense Game");
+        setTitle("King Tower Defense 3000");
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        setResizable(true);  // Changed from false to true
+        setResizable(true);
+        
+        // Show menu screen first
+        showMenu();
+        
+        pack();
+        setLocationRelativeTo(null); 
+        setVisible(true);
+    }
+    
+    private void showMenu() {
+        // Create action listeners for each map
+        java.awt.event.ActionListener[] mapSelectors = new java.awt.event.ActionListener[availableMaps.length];
+        for (int i = 0; i < availableMaps.length; i++) {
+            final int mapIndex = i;
+            mapSelectors[i] = e -> startGame(mapIndex);
+        }
+        
+        MenuPanel menuPanel = new MenuPanel(availableMaps, mapSelectors);
+        menuPanel.setPreferredSize(new Dimension(1000, 800));
+        
+        // Clear any existing content and show menu
+        getContentPane().removeAll();
+        add(menuPanel);
+        setTitle("King Tower Defense 3000 - Select Map");
+    }
+    
+    private void startGame(int mapIndex) {
+        MenuPanel.MapInfo selectedMap = availableMaps[mapIndex];
         
         map = new GameMap(1000, 800);
 
         TowerManager = new TowerManager();
         TowerManager.addMoney(200);
 
-        String routeCode = "RRRRRRRRRRRRRDDDDDDDDDDDDDDDDDDDDDDDRRRRRRRRRRRRRRRRRRUUUUUUUUUUUUUUUUUUUUUUURRRRRRRRRRRRRDDDDDDDDDDDDDDDDDDDRRRRRRRR";
-        map.setPath(routeCode, 0, 185);
+        map.setPath(selectedMap.routeCode, selectedMap.startX, selectedMap.startY);
 
         enemyManager = new EnemyManager(map.getPath());
         
-        gamePanel = new GamePanel(map, enemyManager, TowerManager); 
+        gamePanel = new GamePanel(map, enemyManager, TowerManager, selectedMap.imageFile); 
         
         gamePanel.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent e) {
                 placeTower(e.getX(), e.getY());
             }
         });
+        
+        // Clear menu and show game
+        getContentPane().removeAll();
         add(gamePanel);
         
         // Control panel with Start Wave button
@@ -49,12 +97,24 @@ public class KingTowerDefense3000 extends JFrame {
         });
         controlPanel.add(waveLabel);
         controlPanel.add(startWaveButton);
+        
+        JButton backToMenuButton = new JButton("Back to Menu");
+        backToMenuButton.addActionListener(e -> {
+            if (gameTimer != null) {
+                gameTimer.stop();
+            }
+            showMenu();
+            pack();
+            setLocationRelativeTo(null);
+        });
+        controlPanel.add(backToMenuButton);
+        
         add(controlPanel, java.awt.BorderLayout.SOUTH);
         
         pack();
-        setLocationRelativeTo(null); 
-        setVisible(true);
-
+        setLocationRelativeTo(null);
+        setTitle("King Tower Defense 3000 - " + selectedMap.name);
+        
         startGameLoop();
     }
 
@@ -111,7 +171,10 @@ public class KingTowerDefense3000 extends JFrame {
 
 
     private void startGameLoop() {
-        Timer gameTimer = new Timer(16, e -> updateGame());
+        if (gameTimer != null) {
+            gameTimer.stop();
+        }
+        gameTimer = new Timer(16, e -> updateGame());
         gameTimer.start();
     }
     

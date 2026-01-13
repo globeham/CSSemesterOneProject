@@ -95,7 +95,7 @@ public class EnemyManager {
 
             // if enemy reached the end, remove (no reward)
             if (enemyReachedEnd(enemy)) {
-                health-=100;
+                health-=10;
                 System.out.println(health);
                 if(health==0) {
                     System.out.println("Game Over! You've run out of health.");
@@ -117,7 +117,9 @@ public class EnemyManager {
     private boolean enemyReachedEnd(Enemy enemy) {
         ArrayList<Point2D> pathPoints = enemy.getPath();
         Point2D lastPoint = pathPoints.get(pathPoints.size() - 1);
-        return enemy.getX() == lastPoint.getX() && enemy.getY() == lastPoint.getY();
+        double distance = Math.sqrt(Math.pow(enemy.getX() - lastPoint.getX(), 2) + 
+                                     Math.pow(enemy.getY() - lastPoint.getY(), 2));
+        return distance < 25;  // within 25 pixels of the end
     }
 
     // draws all enemies on the screen

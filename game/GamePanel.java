@@ -12,6 +12,10 @@ public class GamePanel extends JPanel {
     private BufferedImage bgImage;
     
     public GamePanel(GameMap map, EnemyManager enemyManager, TowerManager TowerManager) {
+        this(map, enemyManager, TowerManager, "images/kingtowerdefense map1.png");
+    }
+    
+    public GamePanel(GameMap map, EnemyManager enemyManager, TowerManager TowerManager, String imageFile) {
         this.map = map;
         this.enemyManager = enemyManager; 
         this.TowerManager = TowerManager;
@@ -19,7 +23,7 @@ public class GamePanel extends JPanel {
         this.setBackground(Color.GREEN);
         
         try {
-            bgImage = ImageIO.read(new File("images/kingtowerdefense map1.png"));
+            bgImage = ImageIO.read(new File(imageFile));
         } catch (IOException e) {
             System.out.println("Could not load background image: " + e.getMessage());
             bgImage = null;
