@@ -5,6 +5,9 @@ import java.io.IOException;
 import javax.imageio.ImageIO;
 import javax.swing.*;
 
+/*
+GamePanel class handles the game display, including all game elements
+*/
 public class GamePanel extends JPanel {
     private GameMap map;
     private EnemyManager enemyManager; 

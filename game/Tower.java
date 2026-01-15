@@ -1,6 +1,9 @@
 import java.awt.*;
 import java.util.ArrayList;
 
+/*
+Tower superclass for all towers in the game
+ */
 public class Tower {
     private int shootingSpeed;
     private int radius;
@@ -12,6 +15,7 @@ public class Tower {
     private int pulse = 0;
     private java.awt.image.BufferedImage image;
 
+    // constructor for tower
     public Tower(int speed, int radius, int damage, int cost) {
         this.shootingSpeed = speed;
         this.radius = radius;
@@ -20,7 +24,7 @@ public class Tower {
         this.shotCooldown = 0;
     }
 
-    public void update(ArrayList<Enemy> enemies) {
+    public void update(ArrayList<Enemy> enemies, TowerManager towerManager) {
         // Tower logic to target and shoot enemies within radius
         if (shotCooldown > 0) {
             shotCooldown--;
@@ -30,7 +34,10 @@ public class Tower {
             double distance = Math.sqrt(Math.pow(enemy.getX() - x, 2) + Math.pow(enemy.getY() - y, 2));
             if (distance <= radius) {
                 
-                enemy.takeDamage(damage);
+                // Create projectile instead of instant damage
+                Projectile projectile = new Projectile(x, y, enemy, 8, damage);
+                towerManager.addProjectile(projectile);
+                
                 shotCooldown = shootingSpeed;
                 pulse = 30;
                 break;
@@ -42,11 +49,13 @@ public class Tower {
         }
     }
 
+    // setter
     public void setPosition(int x, int y) {
         this.x = x;
         this.y = y;
     }
 
+    // upgrade methods
     public void upgradeSpeed(int increment) {
         this.shootingSpeed += increment;
     }
@@ -59,6 +68,7 @@ public class Tower {
         this.damage += increment;
     }
 
+    // basic draw method
     public void draw(Graphics g) {
         if (pulse>0) {
             g.setColor(Color.RED);
@@ -75,10 +85,12 @@ public class Tower {
         }
     }
 
+    // sets image
     public void setImage(java.awt.image.BufferedImage img) {
         this.image = img;
     }
 
+    // getters
     public int getX() {
         return x;
     }

@@ -1,6 +1,10 @@
 import javax.swing.*;
 import java.awt.*;
 
+/*
+KingTowerDefense3000 is the main game class that manages the game state
+*/
+
 public class KingTowerDefense3000 extends JFrame {
     private GameMap map;
     private GamePanel gamePanel;
@@ -23,6 +27,7 @@ public class KingTowerDefense3000 extends JFrame {
             162, 0, "images/map2.png"),
     };
     
+    // constructor for the main game class
     public KingTowerDefense3000() {
         setTitle("King Tower Defense 3000");
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -59,11 +64,13 @@ public class KingTowerDefense3000 extends JFrame {
         setTitle("King Tower Defense 3000 - Select Map");
     }
     
+    // starts game cycle
     private void startGame(int mapIndex) {
         MenuPanel.MapInfo selectedMap = availableMaps[mapIndex];
         
         map = new GameMap(1000, 800);
 
+        // Initialize TowerManager with starting money
         TowerManager = new TowerManager();
         TowerManager.addMoney(200);
 
@@ -153,6 +160,7 @@ public class KingTowerDefense3000 extends JFrame {
         startGameLoop();
     }
 
+    // shows glass pane for dragging towers
     public void showGlassPane(boolean show) {
         if (glassPane != null) {
             glassPane.setVisible(show);
@@ -167,6 +175,7 @@ public class KingTowerDefense3000 extends JFrame {
         gameTimer.start();
     }
     
+    // updates game state 
     private void updateGame() {
         enemyManager.updateEnemies(TowerManager);
         TowerManager.updateTowers(enemyManager.getEnemies());
@@ -185,6 +194,7 @@ public class KingTowerDefense3000 extends JFrame {
         gamePanel.repaint();
     }
 
+    // updates menu wave label
     private void updateWaveLabel() {
         if (waveLabel != null && enemyManager != null) {
             waveLabel.setText("Wave: " + enemyManager.getCurrentWave() + "/" + numberOfWaves);

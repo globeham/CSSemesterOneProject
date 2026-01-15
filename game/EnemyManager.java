@@ -148,7 +148,7 @@ public class EnemyManager {
         return currentWave;
     }
 
-    // returns current health`
+    // returns current health
     public int getHealth() {
         return health;
     }

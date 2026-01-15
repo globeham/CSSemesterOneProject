@@ -2,10 +2,13 @@ import java.awt.*;
 import java.awt.event.ActionListener;
 import javax.swing.*;
 
+/*
+MenuPanel class handles the menu display and map selection
+ */
 public class MenuPanel extends JPanel {
     private JButton[] mapButtons;
     private ActionListener[] actionListeners;
-    
+
     public static class MapInfo {
         public String name;
         public String routeCode;
@@ -13,6 +16,7 @@ public class MenuPanel extends JPanel {
         public int startY;
         public String imageFile;
         
+        // constructor for map info
         public MapInfo(String name, String routeCode, int startX, int startY, String imageFile) {
             this.name = name;
             this.routeCode = routeCode;
@@ -21,7 +25,7 @@ public class MenuPanel extends JPanel {
             this.imageFile = imageFile;
         }
     }
-    
+    // constructor for menu panel
     public MenuPanel(MapInfo[] maps, ActionListener[] listeners) {
         this.actionListeners = listeners;
         this.mapButtons = new JButton[maps.length];

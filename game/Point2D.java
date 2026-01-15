@@ -1,6 +1,5 @@
 /* 
 Helper class with point methods
-basically used to make paths and decide where enemies go i think
 */
 
 public class Point2D {
@@ -14,6 +13,7 @@ public class Point2D {
         this.y = initY;
     }
 
+    // getters
     public int getX() {
         return this.x;
     }
