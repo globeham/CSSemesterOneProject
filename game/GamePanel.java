@@ -14,6 +14,7 @@ public class GamePanel extends JPanel {
     private TowerManager TowerManager;
     private BufferedImage bgImage;
     private BufferedImage[] towerImages;
+    private BufferedImage fireballImage;
     private int draggingTowerIndex = -1;
     private int dragX = -1, dragY = -1;
     
@@ -37,6 +38,14 @@ public class GamePanel extends JPanel {
             } catch (IOException e) {
                 System.out.println("Could not load tower image: " + towerImageFiles[i]);
             }
+        }
+        
+        // Load fireball image for wizard projectiles
+        try {
+            fireballImage = ImageIO.read(new File("images/fireball.png"));
+        } catch (IOException e) {
+            System.out.println("Could not load fireball image");
+            fireballImage = null;
         }
         
         try {
@@ -95,14 +104,19 @@ public class GamePanel extends JPanel {
     }
     
     private Tower createTower(int index, int x, int y) {
+        Tower tower;
         switch (index) {
-            case 0: return new Knight(x, y, 0, 0, null);
-            case 1: return new Devil(x, y, 0, 0, null);
-            case 2: return new King(x, y, 0, 0, null);
-            case 3: return new Ninja(x, y, 0, 0, null);
-            case 4: return new Wizard(x, y, 0, 0, null);
+            case 0: tower = new Knight(x, y, 0, 0, null); break;
+            case 1: tower = new Devil(x, y, 0, 0, null); break;
+            case 2: tower = new King(x, y, 0, 0, null); break;
+            case 3: tower = new Ninja(x, y, 0, 0, null); break;
+            case 4: 
+                tower = new Wizard(x, y, 0, 0, null);
+                tower.setProjectileImage(fireballImage);
+                break;
             default: return null;
         }
+        return tower;
     }
     
     @Override

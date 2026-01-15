@@ -14,6 +14,7 @@ public class Tower {
     private int shotCooldown;
     private int pulse = 0;
     private java.awt.image.BufferedImage image;
+    private java.awt.image.BufferedImage projectileImage;
 
     // constructor for tower
     public Tower(int speed, int radius, int damage, int cost) {
@@ -35,7 +36,7 @@ public class Tower {
             if (distance <= radius) {
                 
                 // Create projectile instead of instant damage
-                Projectile projectile = new Projectile(x, y, enemy, 8, damage);
+                Projectile projectile = new Projectile(x, y, enemy, 8, damage, projectileImage);
                 towerManager.addProjectile(projectile);
                 
                 shotCooldown = shootingSpeed;
@@ -88,6 +89,10 @@ public class Tower {
     // sets image
     public void setImage(java.awt.image.BufferedImage img) {
         this.image = img;
+    }
+
+    public void setProjectileImage(java.awt.image.BufferedImage img) {
+        this.projectileImage = img;
     }
 
     // getters

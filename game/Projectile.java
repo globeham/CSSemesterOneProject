@@ -1,4 +1,5 @@
 import java.awt.*;
+import java.awt.image.BufferedImage;
 
 /*
 Projectile class for tower attacks
@@ -10,13 +11,17 @@ public class Projectile {
     private int damage;
     private Enemy target;
     private boolean active = true;
+    private BufferedImage image;
+    private int drawSize = 16;
 
-    public Projectile(int startX, int startY, Enemy target, int speed, int damage) {
+    public Projectile(int startX, int startY, Enemy target, int speed, int damage, BufferedImage image) {
         this.x = startX;
         this.y = startY;
         this.target = target;
         this.speed = speed;
         this.damage = damage;
+        this.image = image;
+        this.drawSize = (image != null) ? 32 : 16; // Larger size for image projectiles
         updateTargetPosition();
     }
 
@@ -49,8 +54,12 @@ public class Projectile {
 
     public void draw(Graphics g) {
         if (active) {
-            g.setColor(Color.YELLOW);
-            g.fillOval(x - 3, y - 3, 6, 6);
+            if (image != null) {
+                g.drawImage(image, x - drawSize/2, y - drawSize/2, drawSize, drawSize, null);
+            } else {
+                g.setColor(Color.YELLOW);
+                g.fillOval(x - 3, y - 3, 6, 6);
+            }
         }
     }
 
