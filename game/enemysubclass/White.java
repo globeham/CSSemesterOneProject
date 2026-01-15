@@ -5,6 +5,9 @@ import java.io.IOException;
 import java.util.ArrayList;
 import javax.imageio.ImageIO;
 import java.awt.geom.AffineTransform;
+/*
+White subclass of Enemy
+*/
 
 public class White extends Enemy {
     private BufferedImage[] frames;
@@ -20,6 +23,7 @@ public class White extends Enemy {
     private boolean facingRight = true;
     private int verticalDirection = 0;
 
+    // constructor for white
     public White(int health, int reward, int speed, ArrayList<Point2D> path) {
         super(health, reward, speed, path, Color.white);
         loadSpriteSheet();
@@ -29,6 +33,7 @@ public class White extends Enemy {
         lastY = getY();
     }
 
+    // method loads white's sprite sheet
     private void loadSpriteSheet() {
         try {
             BufferedImage spriteSheet = ImageIO.read(new File("images/bird_2_White.png"));
@@ -39,12 +44,9 @@ public class White extends Enemy {
             frameCount = cols * rows;
             frames = new BufferedImage[frameCount];
             
-            System.out.println("White sprite: " + spriteSheet.getWidth() + "x" + spriteSheet.getHeight() + 
-                             " -> frames: " + frameWidth + "x" + frameHeight + ", total: " + frameCount + 
-                             " (" + cols + " cols x " + rows + " rows)");
-            
             int idx = 0;
             for (int r = 0; r < rows; r++) {
+                // iterating through sprite sheet
                 for (int c = 0; c < cols; c++) {
                     int sx = c * frameWidth;
                     int sy = r * frameHeight;
@@ -89,6 +91,7 @@ public class White extends Enemy {
 
         Graphics2D g2d = (Graphics2D) g.create();
         try {
+            // animate white based on direction
             if (frames != null && frames.length > 0) {
                 int rowStart = 9;
                 if (verticalDirection > 0) {

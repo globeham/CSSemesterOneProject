@@ -24,7 +24,6 @@ public class Enemy {
         this.speed = speed;
         this.path = path;
         this.color = color;
-        this.image = image;
         this.pathIndex = 0;
 
         Point2D start = path.get(0);
@@ -93,6 +92,10 @@ public class Enemy {
         return reward;
     }
 
+    public void setReward(int reward) {
+        this.reward = reward;
+    }
+
     // sets distance traveled by enemy
     public void setDistanceTraveled(int distance) {
         int traveled = 0;
@@ -130,5 +133,10 @@ public class Enemy {
     // getter for health
     public int getHealth() {
         return health;      
+    }
+
+    // setter for health
+    public void setHealth(int health) {
+        this.health = health;
     }
 }

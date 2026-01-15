@@ -5,13 +5,13 @@ import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
-import java.util.ArrayList;
 import javax.imageio.ImageIO;
 
 public class Devil extends Tower {
     private BufferedImage image;
+    // constructor for devil tower
     public Devil(int speed, int radius, int damage, int cost, BufferedImage image) {
-        super(24, 140, 18, 400); // cost: 400
+        super(24, 140, 18, 400);
         try {
             this.image = ImageIO.read(new File("images/devil.png"));
             setImage(this.image);

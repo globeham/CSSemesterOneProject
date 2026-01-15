@@ -6,12 +6,15 @@ import java.util.ArrayList;
 import javax.imageio.ImageIO;
 import java.awt.geom.AffineTransform;
 
+/* 
+Cardinal subclass of Enemy
+ */
 public class Cardinal extends Enemy {
     private BufferedImage[] frames;
     private int currentFrame;
     private int frameCount;
     private long lastFrameTime;
-    private static final int FRAME_DELAY = 100; // milliseconds between frames
+    private static final int FRAME_DELAY = 100;
     private int frameWidth;
     private int frameHeight;
     private int drawSize = 36;
@@ -20,6 +23,7 @@ public class Cardinal extends Enemy {
     private boolean facingRight = true;
     private int verticalDirection = 0;
 
+    // constructor for cardinal
     public Cardinal(int health, int reward, int speed, ArrayList<Point2D> path) {
         super(health, reward, speed, path, Color.red);
         loadSpriteSheet();
@@ -29,6 +33,7 @@ public class Cardinal extends Enemy {
         lastY = getY();
     }
 
+    // method loads cardinal's sprite sheet
     private void loadSpriteSheet() {
         try {
             BufferedImage spriteSheet = ImageIO.read(new File("images/bird_2_Cardinal.png"));
@@ -38,12 +43,9 @@ public class Cardinal extends Enemy {
             int rows = spriteSheet.getHeight() / frameHeight;
             frameCount = cols * rows;
             frames = new BufferedImage[frameCount];
-            
-            System.out.println("Cardinal sprite: " + spriteSheet.getWidth() + "x" + spriteSheet.getHeight() + 
-                             " -> frames: " + frameWidth + "x" + frameHeight + ", total: " + frameCount + 
-                             " (" + cols + " cols x " + rows + " rows)");
-            
+
             int idx = 0;
+            // iterating through sprite sheet
             for (int r = 0; r < rows; r++) {
                 for (int c = 0; c < cols; c++) {
                     int sx = c * frameWidth;
@@ -52,6 +54,7 @@ public class Cardinal extends Enemy {
                 }
             }
         } catch (IOException e) {
+            // fallback to single image if sprite sheet fails
             System.out.println("Could not load Cardinal sprite sheet: " + e.getMessage());
             try {
                 this.image = ImageIO.read(new File("images/bird_2_Cardinal.png"));
@@ -90,6 +93,7 @@ public class Cardinal extends Enemy {
         Graphics2D g2d = (Graphics2D) g.create();
         try {
             if (frames != null && frames.length > 0) {
+                // select row based on vertical direction
                 int rowStart = 9;
                 if (verticalDirection > 0) {
                     rowStart = 6;
@@ -100,6 +104,7 @@ public class Cardinal extends Enemy {
                 BufferedImage img = frames[displayFrame];
                 int dx = x - drawSize / 2;
                 int dy = y - drawSize / 2;
+                // animates the cardinal based on direction
                 if (!facingRight) {
                     AffineTransform at = AffineTransform.getTranslateInstance(dx + drawSize, dy);
                     at.scale(-1, 1);

@@ -6,22 +6,26 @@ import java.util.ArrayList;
 import javax.imageio.ImageIO;
 import java.awt.geom.AffineTransform;
 
+/*
+Bluejay subclass of Enemy
+ */
 public class Bluejay extends Enemy {
     private BufferedImage[] frames;
     private int currentFrame;
     private int frameCount;
     private long lastFrameTime;
-    private static final int FRAME_DELAY = 100; // milliseconds between frames
-    private int frameWidth; // actual width of each frame (auto-detected)
-    private int frameHeight; // actual height of each frame (auto-detected)
-    private int drawSize = 36; // size to draw the bird
-    private int lastX; // used to determine facing direction
-    private int lastY; // used to determine vertical direction
+    private static final int FRAME_DELAY = 100; 
+    private int frameWidth; 
+    private int frameHeight; 
+    private int drawSize = 36; 
+    private int lastX; 
+    private int lastY; 
     private boolean facingRight = true;
     private int verticalDirection = 0; // 1 for down, -1 for up, 0 for neutral
 
+    // constructor for bluejay
     public Bluejay(int health, int reward, int speed, ArrayList<Point2D> path) {
-        super(health, reward, speed, path, Color.BLUE); // fallback color
+        super(health, reward, speed, path, Color.BLUE);
         loadSpriteSheet();
         currentFrame = 0;
         lastFrameTime = System.currentTimeMillis();
@@ -29,24 +33,20 @@ public class Bluejay extends Enemy {
         lastY = getY();
     }
 
+    // method loads bluejay's sprite sheet
     private void loadSpriteSheet() {
         try {
             BufferedImage spriteSheet = ImageIO.read(new File("images/bird_1_bluejay (1).png"));
-            // Auto-detect frame dimensions: sprite is 96x256, so assume 4 columns (96/4=24) and multiple rows (256/32=8)
-            // Try common heights: 32, 24, 20; pick the one that divides evenly
-            frameWidth = 32;  // 96 / 3 = 32 pixels per frame
-            frameHeight = 32; // 256 / 8 = 32 pixels per frame
+            frameWidth = 32;  
+            frameHeight = 32; 
             
             int cols = spriteSheet.getWidth() / frameWidth;
             int rows = spriteSheet.getHeight() / frameHeight;
             frameCount = cols * rows;
             frames = new BufferedImage[frameCount];
             
-            System.out.println("Bluejay sprite: " + spriteSheet.getWidth() + "x" + spriteSheet.getHeight() + 
-                             " -> frames: " + frameWidth + "x" + frameHeight + ", total: " + frameCount + 
-                             " (" + cols + " cols x " + rows + " rows)");
-            
             int idx = 0;
+            // iterating through sprite sheet
             for (int r = 0; r < rows; r++) {
                 for (int c = 0; c < cols; c++) {
                     int sx = c * frameWidth;
@@ -56,7 +56,7 @@ public class Bluejay extends Enemy {
             }
         } catch (IOException e) {
             System.out.println("Could not load Bluejay sprite sheet: " + e.getMessage());
-            // Fallback to single image if sprite sheet fails
+            // fallback to single image if sprite sheet fails
             try {
                 this.image = ImageIO.read(new File("images/bird_1_bluejay.png"));
             } catch (IOException e2) {
@@ -68,7 +68,7 @@ public class Bluejay extends Enemy {
     @Override
     public void move() {
         super.move();
-        // Animate based on movement
+        // animate based on movement
         long currentTime = System.currentTimeMillis();
         if (frameCount > 0 && currentTime - lastFrameTime > FRAME_DELAY) {
             currentFrame = (currentFrame + 1) % frameCount;
@@ -97,18 +97,18 @@ public class Bluejay extends Enemy {
         Graphics2D g2d = (Graphics2D) g.create();
         try {
             if (frames != null && frames.length > 0) {
-                // Select row based on vertical direction (3 frames per row for 32x32 layout)
-                // 2nd row (frames 3-5) for going up, 3rd row (frames 6-8) for going down, 4th row (frames 9-11) for neutral
-                int rowStart = 9; // default to 4th row (neutral/horizontal)
+                // Select row based on vertical direction
+                int rowStart = 9;
                 if (verticalDirection > 0) {
-                    rowStart = 6; // 3rd row for going down
+                    rowStart = 6;
                 } else if (verticalDirection < 0) {
-                    rowStart = 3; // 2nd row for going up
+                    rowStart = 3;
                 }
                 int displayFrame = rowStart + (currentFrame % 3);
                 BufferedImage img = frames[displayFrame];
                 int dx = x - drawSize / 2;
                 int dy = y - drawSize / 2;
+                // animates the bluejay based on direction
                 if (!facingRight) {
                     AffineTransform at = AffineTransform.getTranslateInstance(dx + drawSize, dy);
                     at.scale(-1, 1);

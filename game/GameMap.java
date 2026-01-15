@@ -1,37 +1,34 @@
 import java.awt.*;
-import javax.swing.*;
 import java.util.ArrayList;
 
+/*
+GameMap class sets up the maps and paths for the game
+ */
 public class GameMap {
     private int width;
     private int height;
-
-    // active path used for drawing/collision (in display coords)
     private ArrayList<Point2D> path;
-
-    // original path in base image coordinates (so we can scale it)
     private ArrayList<Point2D> originalPath;
     private int originalWidth;
     private int originalHeight;
     
+    // constructor for game map
     public GameMap(int initWidth, int initHeight) {
         this.width = initWidth;
         this.height = initHeight;
         this.path = new ArrayList<Point2D>();
         this.originalPath = new ArrayList<Point2D>();
-        this.originalWidth = initWidth;   // treat constructor sizes as the base image size
+        this.originalWidth = initWidth;
         this.originalHeight = initHeight;
     }
     
-    // Creates path from routeCode and stores it as the ORIGINAL path (base coordinates).
-    // The active display path will be the scaled version; call setDisplaySize(...) to generate it.
+    // sets path to given route code
     public void setPath(String routeCode, int startX, int startY) {
         this.originalPath = createPath(routeCode, startX, startY);
-        // initially make display path equal to original (no scaling yet)
         this.path = new ArrayList<Point2D>(originalPath);
     }
     
-    // Creates and returns a path from the given routeCode (base coords)
+    // Creates and returns a path from the given routeCode
     public ArrayList<Point2D> createPath(String routeCode, int startX, int startY) {
         ArrayList<Point2D> newPath = new ArrayList<Point2D>();
         
@@ -64,8 +61,8 @@ public class GameMap {
         return newPath;
     }
 
-    // Call this each time the background image is drawn at a different size.
-    // It scales the original (base) path into the display rectangle (0,0,w,h).
+   
+    // scales the path to fit the current display size
     public void setDisplaySize(int displayW, int displayH) {
         this.width = displayW;
         this.height = displayH;
@@ -84,7 +81,7 @@ public class GameMap {
         this.path = scaled;
     }
 
-    // returns the shortest distance from (x,y) to the path (segments) in display coordinates
+    // returns the shortest distance from (x,y) to the path in display coordinates
     public double distanceToPath(int x, int y) {
         if (path == null || path.size() == 0) return Double.MAX_VALUE;
         double minDist = Double.MAX_VALUE;
@@ -97,7 +94,7 @@ public class GameMap {
         return minDist;
     }
 
-    // convenience: true if (x,y) is within minDistance of the path
+    // true if (x,y) is within minDistance of the path
     public boolean isTooCloseToPath(int x, int y, int minDistance) {
         return distanceToPath(x, y) < minDistance;
     }
@@ -121,7 +118,6 @@ public class GameMap {
     }
     
     // Getters
-    // returns currently-active (display) path (already scaled)
     public ArrayList<Point2D> getPath() {
         return path;
     }
@@ -134,7 +130,7 @@ public class GameMap {
         return height;
     }
     
-    // Draw the path on the map (display coordinates)
+    // Draw the path on the map
     public void drawPath(Graphics g) {
         if (path == null || path.size() < 2) return;
         

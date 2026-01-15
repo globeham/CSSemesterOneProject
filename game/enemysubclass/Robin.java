@@ -6,6 +6,10 @@ import java.util.ArrayList;
 import javax.imageio.ImageIO;
 import java.awt.geom.AffineTransform;
 
+/*
+Robin subclass of Enemy 
+*/
+
 public class Robin extends Enemy {
     private BufferedImage[] frames;
     private int currentFrame;
@@ -20,6 +24,7 @@ public class Robin extends Enemy {
     private boolean facingRight = true;
     private int verticalDirection = 0;
 
+    // constructor for robin
     public Robin(int health, int reward, int speed, ArrayList<Point2D> path) {
         super(health, reward, speed, path, Color.green);
         loadSpriteSheet();
@@ -29,6 +34,7 @@ public class Robin extends Enemy {
         lastY = getY();
     }
 
+    // method loads robin's sprite sheet
     private void loadSpriteSheet() {
         try {
             BufferedImage spriteSheet = ImageIO.read(new File("images/bird_3_Robin.png"));
@@ -39,11 +45,8 @@ public class Robin extends Enemy {
             frameCount = cols * rows;
             frames = new BufferedImage[frameCount];
             
-            System.out.println("Robin sprite: " + spriteSheet.getWidth() + "x" + spriteSheet.getHeight() + 
-                             " -> frames: " + frameWidth + "x" + frameHeight + ", total: " + frameCount + 
-                             " (" + cols + " cols x " + rows + " rows)");
-            
             int idx = 0;
+            // iterating through sprite sheet
             for (int r = 0; r < rows; r++) {
                 for (int c = 0; c < cols; c++) {
                     int sx = c * frameWidth;
@@ -52,6 +55,7 @@ public class Robin extends Enemy {
                 }
             }
         } catch (IOException e) {
+            // fallback to single image if sprite sheet fails
             System.out.println("Could not load Robin sprite sheet: " + e.getMessage());
             try {
                 this.image = ImageIO.read(new File("images/bird_3_Robin.png"));
@@ -88,6 +92,7 @@ public class Robin extends Enemy {
         int y = getY();
 
         Graphics2D g2d = (Graphics2D) g.create();
+        // animate robin based on direction
         try {
             if (frames != null && frames.length > 0) {
                 int rowStart = 9;

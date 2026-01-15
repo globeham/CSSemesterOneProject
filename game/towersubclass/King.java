@@ -5,13 +5,13 @@ import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
-import java.util.ArrayList;
 import javax.imageio.ImageIO;
 
 public class King extends Tower {
     private BufferedImage image;
+    // constructor for king tower
     public King(int speed, int radius, int damage, int cost, BufferedImage image) {
-        super(20, 160, 25, 500); // cost: 500 (most expensive)
+        super(20, 160, 25, 500);
         try {
             this.image = ImageIO.read(new File("images/king.png"));
             setImage(this.image);

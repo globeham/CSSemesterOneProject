@@ -1,6 +1,5 @@
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionListener;
 
 public class KingTowerDefense3000 extends JFrame {
     private GameMap map;
@@ -11,7 +10,8 @@ public class KingTowerDefense3000 extends JFrame {
     private javax.swing.JButton startWaveButton;
     private javax.swing.JLabel waveLabel;
     private javax.swing.JPanel controlPanel;
-    private int numberOfWaves = 5;
+    private JPanel glassPane;
+    private int numberOfWaves = 1000;
     
     // Map definitions
     private MenuPanel.MapInfo[] availableMaps = {
@@ -19,14 +19,8 @@ public class KingTowerDefense3000 extends JFrame {
             "RRRRRRRRRRRRRDDDDDDDDDDDDDDDDDDDDDDDRRRRRRRRRRRRRRRRRRUUUUUUUUUUUUUUUUUUUUUUURRRRRRRRRRRRRDDDDDDDDDDDDDDDDDDDRRRRRRRR",
             0, 185, "images/kingtowerdefense map1.png"),
         new MenuPanel.MapInfo("Map 2 - Spiral", 
-            "DDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDRRRRRRRRRRRRUUUUUUUUUUUUUUUULLLLLLLLLLLLLLDDDDDDDDDDDRRRRRRRRRRRRR",
+            "DDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDRRRRRRRRRRRRUUUUUUUUUUUULLLLLLLLLLLLDDDDDDDDDDDDRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRUUUUUUUUUUUUUUUUUULLLLLLLLLLLLLLLLLLLLLLLLLUUUUUUUUUUURRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRR",
             162, 0, "images/map2.png"),
-        new MenuPanel.MapInfo("Map 3 - Zigzag", 
-            "RRRRRRRRRRRRRRUUUUUUUUUUUUUUURRRRRRRRRRRRRDDDDDDDDDDDDDDRRRRRRRRRRRRRRUUUUUUUUUUUUUU",
-            50, 200, "images/kingtowerdefense map1.png"),
-        new MenuPanel.MapInfo("Map 4 - S-Curve", 
-            "RRRRRRRRRRRRRRRRRRRRRRRRRRDDDDDDDDUUUUUUUUUUUUUUUUUURRRRRRRRRRRRRRRRRRRRRRDDDDDDDD",
-            0, 100, "images/kingtowerdefense map1.png")
     };
     
     public KingTowerDefense3000() {
@@ -53,6 +47,12 @@ public class KingTowerDefense3000 extends JFrame {
         MenuPanel menuPanel = new MenuPanel(availableMaps, mapSelectors);
         menuPanel.setPreferredSize(new Dimension(1000, 800));
         
+        // Hide glass pane if it exists
+        if (glassPane != null) {
+            setGlassPane(new JPanel());
+            glassPane = null;
+        }
+        
         // Clear any existing content and show menu
         getContentPane().removeAll();
         add(menuPanel);
@@ -73,17 +73,11 @@ public class KingTowerDefense3000 extends JFrame {
         
         gamePanel = new GamePanel(map, enemyManager, TowerManager, selectedMap.imageFile); 
         
-        gamePanel.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent e) {
-                placeTower(e.getX(), e.getY());
-            }
-        });
-        
         // Clear menu and show game
         getContentPane().removeAll();
         add(gamePanel);
         
-        // Control panel with Start Wave button
+        // Control panel with Start Wave button and tower buttons
         controlPanel = new JPanel();
         waveLabel = new JLabel("Wave: " + enemyManager.getCurrentWave() + "/" + numberOfWaves);
         startWaveButton = new JButton("Start Wave");
@@ -98,6 +92,23 @@ public class KingTowerDefense3000 extends JFrame {
         controlPanel.add(waveLabel);
         controlPanel.add(startWaveButton);
         
+        // Add tower buttons for dragging
+        String[] towerNames = {"Knight($100)", "Devil($500)", "King($500)", "Ninja($200)", "Wizard($300)"};
+        String[] towerImages = {"images/knight.png", "images/devil.png", "images/king.png", "images/ninja.png", "images/wizard.png"};
+        for (int i = 0; i < 5; i++) {
+            JButton b = new JButton(towerNames[i]);
+            try {
+                b.setIcon(new ImageIcon(towerImages[i]));
+            } catch (Exception ex) {
+                // ignore
+            }
+            final int towerIndex = i;
+            b.addActionListener(ev -> {
+                gamePanel.setDraggingTower(towerIndex);
+            });
+            controlPanel.add(b);
+        }
+        
         JButton backToMenuButton = new JButton("Back to Menu");
         backToMenuButton.addActionListener(e -> {
             if (gameTimer != null) {
@@ -109,6 +120,30 @@ public class KingTowerDefense3000 extends JFrame {
         });
         controlPanel.add(backToMenuButton);
         
+        // Set up glass pane for drag handling
+        glassPane = new JPanel();
+        glassPane.setOpaque(false);
+        setGlassPane(glassPane);
+        glassPane.setVisible(false);
+        
+        glassPane.addMouseMotionListener(new java.awt.event.MouseMotionAdapter() {
+            @Override
+            public void mouseDragged(java.awt.event.MouseEvent e) {
+                if (gamePanel.isDragging()) {
+                    gamePanel.updateDragPosition(e.getX(), e.getY());
+                }
+            }
+        });
+        
+        glassPane.addMouseListener(new java.awt.event.MouseAdapter() {
+            @Override
+            public void mouseReleased(java.awt.event.MouseEvent e) {
+                if (gamePanel.isDragging()) {
+                    gamePanel.tryPlaceTower(e.getX(), e.getY());
+                }
+            }
+        });
+        
         add(controlPanel, java.awt.BorderLayout.SOUTH);
         
         pack();
@@ -118,57 +153,11 @@ public class KingTowerDefense3000 extends JFrame {
         startGameLoop();
     }
 
-    private void placeTower(int x, int y) {
-        // No need to adjust y anymore since we're working in panel coordinates
-        int minDistanceFromPath = 50; 
-        if (map.isTooCloseToPath(x, y, minDistanceFromPath)) {
-            System.out.println("Too close to path — place tower further away.");
-            return;
+    public void showGlassPane(boolean show) {
+        if (glassPane != null) {
+            glassPane.setVisible(show);
         }
-        
-        // Build a small dialog with buttons that place the tower immediately on click
-        final int fx = x;
-        final int fy = y;
-        String[] towerImages = {"images/knight.png", "images/devil.png", "images/king.png", "images/ninja.png", "images/wizard.png"};
-        JPanel panel = new JPanel(new java.awt.GridLayout(1, 5, 8, 8));
-
-        JDialog dialog = new JDialog(this, "Choose a tower to place:", true);
-        for (int i = 0; i < 5; i++) {
-            String name;
-            Tower created;
-            switch (i) {
-                case 0: name = "Knight"; created = new Knight(0,0,0,0,null); break;
-                case 1: name = "Devil"; created = new Devil(0,0,0,0,null); break;
-                case 2: name = "King"; created = new King(0,0,0,0,null); break;
-                case 3: name = "Ninja"; created = new Ninja(0,0,0,0,null); break;
-                default: name = "Wizard"; created = new Wizard(0,0,0,0,null); break;
-            }
-
-            JButton b = new JButton(name);
-            try {
-                b.setIcon(new ImageIcon(towerImages[i]));
-            } catch (Exception ex) {
-                // ignore icon load errors
-            }
-            b.setFocusPainted(false);
-            Tower toPlace = created;
-            b.addActionListener(ev -> {
-                if (TowerManager.placeTower(toPlace, fx, fy)) {
-                    gamePanel.repaint();
-                } else {
-                    JOptionPane.showMessageDialog(this, "Not enough money to place tower.");
-                }
-                dialog.dispose();
-            });
-            panel.add(b);
-        }
-
-        dialog.getContentPane().add(panel);
-        dialog.pack();
-        dialog.setLocationRelativeTo(this);
-        dialog.setVisible(true);
     }
-
 
     private void startGameLoop() {
         if (gameTimer != null) {

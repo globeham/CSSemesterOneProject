@@ -5,7 +5,9 @@ import java.io.IOException;
 import java.util.ArrayList;
 import javax.imageio.ImageIO;
 import java.awt.geom.AffineTransform;
-
+/*
+Sparrow subclass of Enemy
+ */
 public class Sparrow extends Enemy {
     private BufferedImage[] frames;
     private int currentFrame;
@@ -20,6 +22,7 @@ public class Sparrow extends Enemy {
     private boolean facingRight = true;
     private int verticalDirection = 0;
 
+    // constructor for sparrow
     public Sparrow(int health, int reward, int speed, ArrayList<Point2D> path) {
         super(health, reward, speed, path, Color.yellow);
         loadSpriteSheet();
@@ -29,6 +32,7 @@ public class Sparrow extends Enemy {
         lastY = getY();
     }
 
+    // method loads sparrow's sprite sheet
     private void loadSpriteSheet() {
         try {
             BufferedImage spriteSheet = ImageIO.read(new File("images/bird_3_Sparrow.png"));
@@ -39,11 +43,8 @@ public class Sparrow extends Enemy {
             frameCount = cols * rows;
             frames = new BufferedImage[frameCount];
             
-            System.out.println("Sparrow sprite: " + spriteSheet.getWidth() + "x" + spriteSheet.getHeight() + 
-                             " -> frames: " + frameWidth + "x" + frameHeight + ", total: " + frameCount + 
-                             " (" + cols + " cols x " + rows + " rows)");
-            
             int idx = 0;
+            // iterating through sprite sheet
             for (int r = 0; r < rows; r++) {
                 for (int c = 0; c < cols; c++) {
                     int sx = c * frameWidth;
@@ -89,6 +90,7 @@ public class Sparrow extends Enemy {
 
         Graphics2D g2d = (Graphics2D) g.create();
         try {
+            // animate sparrow based on direction
             if (frames != null && frames.length > 0) {
                 int rowStart = 9;
                 if (verticalDirection > 0) {
