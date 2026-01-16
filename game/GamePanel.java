@@ -145,8 +145,24 @@ public class GamePanel extends JPanel {
         if (enemyManager != null) enemyManager.drawEnemies(g);
         if (TowerManager != null) TowerManager.drawTowers(g);
 
-        // Draw drag preview
+        // Draw drag preview with shooting radius
         if (draggingTowerIndex != -1 && dragX != -1) {
+            // Get the radius for the tower being placed
+            int previewRadius = 0;
+            switch (draggingTowerIndex) {
+                case 0: previewRadius = 120; break; // Knight
+                case 1: previewRadius = 140; break; // Devil
+                case 2: previewRadius = 160; break; // King
+                case 3: previewRadius = 110; break; // Ninja
+                case 4: previewRadius = 130; break; // Wizard
+                default: previewRadius = 100; break;
+            }
+            // Draw semi-transparent gray shooting radius
+            Graphics2D g2d = (Graphics2D) g.create();
+            g2d.setColor(new Color(128, 128, 128, 80));
+            g2d.fillOval(dragX - previewRadius, dragY - previewRadius, 2 * previewRadius, 2 * previewRadius);
+            g2d.dispose();
+
             double dist = map.distanceToPath(dragX, dragY);
             g.setColor(dist >= 50 ? Color.GREEN : Color.RED);
             g.drawOval(dragX - 25, dragY - 25, 50, 50);

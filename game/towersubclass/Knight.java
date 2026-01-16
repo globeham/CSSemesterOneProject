@@ -15,6 +15,8 @@ public class Knight extends Tower {
         try {
             this.image = ImageIO.read(new File("images/knight.png"));
             setImage(this.image);
+            BufferedImage spikeball = ImageIO.read(new File("images/spike ball.png"));
+            setProjectileImage(spikeball);
         } catch (IOException e) {
             System.out.println("Could not load knight image: " + e.getMessage());
         }

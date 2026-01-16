@@ -11,10 +11,12 @@ public class Devil extends Tower {
     private BufferedImage image;
     // constructor for devil tower
     public Devil(int speed, int radius, int damage, int cost, BufferedImage image) {
-        super(24, 140, 18, 400);
+        super(24, 140, 18, 500);
         try {
             this.image = ImageIO.read(new File("images/devil.png"));
             setImage(this.image);
+            BufferedImage redOrbImage = ImageIO.read(new File("images/Red Orb.png"));
+            setProjectileImage(redOrbImage);
         } catch (IOException e) {
             System.out.println("Could not load devil image: " + e.getMessage());
         }

@@ -15,8 +15,10 @@ public class King extends Tower {
         try {
             this.image = ImageIO.read(new File("images/king.png"));
             setImage(this.image);
+            BufferedImage orbImage = ImageIO.read(new File("images/orb.png"));
+            setProjectileImage(orbImage);
         } catch (IOException e) {
-            System.out.println("Could not load king image: " + e.getMessage());
+            System.out.println("Could not load king or orb image: " + e.getMessage());
         }
     }
 

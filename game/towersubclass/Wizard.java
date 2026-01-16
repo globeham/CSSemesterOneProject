@@ -11,7 +11,7 @@ public class Wizard extends Tower {
     private BufferedImage image;
     // constructor for wizard tower
     public Wizard(int speed, int radius, int damage, int cost, BufferedImage image) {
-        super(26, 130, 16, 10);
+        super(26, 130, 16, 300);
         try {
             this.image = ImageIO.read(new File("images/wizard.png"));
             setImage(this.image);

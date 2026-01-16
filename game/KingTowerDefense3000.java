@@ -133,23 +133,24 @@ public class KingTowerDefense3000 extends JFrame {
         setGlassPane(glassPane);
         glassPane.setVisible(false);
         
-        glassPane.addMouseMotionListener(new java.awt.event.MouseMotionAdapter() {
-            @Override
-            public void mouseDragged(java.awt.event.MouseEvent e) {
-                if (gamePanel.isDragging()) {
-                    gamePanel.updateDragPosition(e.getX(), e.getY());
+
+            glassPane.addMouseMotionListener(new java.awt.event.MouseMotionAdapter() {
+                @Override
+                public void mouseMoved(java.awt.event.MouseEvent e) {
+                    if (gamePanel.isDragging()) {
+                        gamePanel.updateDragPosition(e.getX(), e.getY());
+                    }
                 }
-            }
-        });
-        
-        glassPane.addMouseListener(new java.awt.event.MouseAdapter() {
-            @Override
-            public void mouseReleased(java.awt.event.MouseEvent e) {
-                if (gamePanel.isDragging()) {
-                    gamePanel.tryPlaceTower(e.getX(), e.getY());
+            });
+
+            glassPane.addMouseListener(new java.awt.event.MouseAdapter() {
+                @Override
+                public void mouseClicked(java.awt.event.MouseEvent e) {
+                    if (gamePanel.isDragging()) {
+                        gamePanel.tryPlaceTower(e.getX(), e.getY());
+                    }
                 }
-            }
-        });
+            });
         
         add(controlPanel, java.awt.BorderLayout.SOUTH);
         

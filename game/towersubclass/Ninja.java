@@ -15,6 +15,8 @@ public class Ninja extends Tower {
         try {
             this.image = ImageIO.read(new File("images/ninja.png"));
             setImage(this.image);
+            BufferedImage shuriken = ImageIO.read(new File("images/shuriken.png"));
+            setProjectileImage(shuriken);
         } catch (IOException e) {
             System.out.println("Could not load ninja image: " + e.getMessage());
         }
