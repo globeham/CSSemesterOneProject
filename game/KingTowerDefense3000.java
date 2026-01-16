@@ -16,6 +16,7 @@ public class KingTowerDefense3000 extends JFrame {
     private javax.swing.JPanel controlPanel;
     private JPanel glassPane;
     private int numberOfWaves = 1000;
+    private MusicPlayer musicPlayer;
     
     // Map definitions
     private MenuPanel.MapInfo[] availableMaps = {
@@ -32,7 +33,11 @@ public class KingTowerDefense3000 extends JFrame {
         setTitle("King Tower Defense 3000");
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setResizable(true);
-        
+
+        // Play Fluffing a Duck
+        musicPlayer = new MusicPlayer();
+        musicPlayer.playMusic("images/fluffingaduck.wav"); // Place the .wav file in the project root or update the path
+
         // Show menu screen first
         showMenu();
         
