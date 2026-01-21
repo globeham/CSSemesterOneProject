@@ -14,6 +14,7 @@ public class Projectile {
     private BufferedImage image;
     private int drawSize = 16;
 
+    // constructor for projectiles
     public Projectile(int startX, int startY, Enemy target, int speed, int damage, BufferedImage image) {
         this.x = startX;
         this.y = startY;
@@ -21,10 +22,11 @@ public class Projectile {
         this.speed = speed;
         this.damage = damage;
         this.image = image;
-        this.drawSize = (image != null) ? 32 : 16; // Larger size for image projectiles
+        this.drawSize = (image != null) ? 32 : 16;
         updateTargetPosition();
     }
 
+    // updates the target's position
     private void updateTargetPosition() {
         if (target != null) {
             targetX = target.getX();
@@ -32,6 +34,7 @@ public class Projectile {
         }
     }
 
+    // updates the projectile's position and checks for collision with the target
     public void update() {
         if (!active || target == null) return;
 
@@ -52,6 +55,7 @@ public class Projectile {
         }
     }
 
+    // draws the projectile
     public void draw(Graphics g) {
         if (active) {
             if (image != null) {
@@ -63,10 +67,12 @@ public class Projectile {
         }
     }
 
+    // returns true if the projectile is still active
     public boolean isActive() {
         return active;
     }
 
+    // sets the projectile's active state
     public void setActive(boolean active) {
         this.active = active;
     }
