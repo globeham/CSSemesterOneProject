@@ -22,6 +22,9 @@ public class Bluejay extends Enemy {
     private int lastY; 
     private boolean facingRight = true;
     private int verticalDirection = 0; // 1 for down, -1 for up, 0 for neutral
+    private int vx = 0;
+    private int vy = 0;
+
 
     // constructor for bluejay
     public Bluejay(int health, int reward, int speed, ArrayList<Point2D> path) {
@@ -75,17 +78,21 @@ public class Bluejay extends Enemy {
             lastFrameTime = currentTime;
         }
 
-        // update facing direction and vertical movement
+        // calculate velocity
         int x = getX();
         int y = getY();
-        if (x > lastX) facingRight = true;
-        else if (x < lastX) facingRight = false;
+
+        vx = x - lastX;
+        vy = y - lastY;
+
+        if (vx > 0) facingRight = true;
+        else if (vx < 0) facingRight = false;
+
+        if (vy > 0) verticalDirection = 1;
+        else if (vy < 0) verticalDirection = -1;
+        else verticalDirection = 0;
+
         lastX = x;
-        
-        // track vertical direction
-        if (y > lastY) verticalDirection = 1; // moving down
-        else if (y < lastY) verticalDirection = -1; // moving up
-        else verticalDirection = 0; // not moving vertically
         lastY = y;
     }
 

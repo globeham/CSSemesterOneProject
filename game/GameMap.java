@@ -12,6 +12,7 @@ public class GameMap {
     private int originalWidth;
     private int originalHeight;
     
+    
     // constructor for game map
     public GameMap(int initWidth, int initHeight) {
         this.width = initWidth;

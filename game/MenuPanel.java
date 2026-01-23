@@ -80,6 +80,7 @@ public class MenuPanel extends JPanel {
             
             mapButtons[i] = button;
             add(button, gbc);
+            
         }
     }
 }

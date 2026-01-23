@@ -22,6 +22,9 @@ public class Cardinal extends Enemy {
     private int lastY;
     private boolean facingRight = true;
     private int verticalDirection = 0;
+    private int vx = 0;
+    private int vy = 0;
+
 
     // constructor for cardinal
     public Cardinal(int health, int reward, int speed, ArrayList<Point2D> path) {
@@ -73,15 +76,21 @@ public class Cardinal extends Enemy {
             lastFrameTime = currentTime;
         }
 
+        // calculate velocity
         int x = getX();
         int y = getY();
-        if (x > lastX) facingRight = true;
-        else if (x < lastX) facingRight = false;
-        lastX = x;
-        
-        if (y > lastY) verticalDirection = 1;
-        else if (y < lastY) verticalDirection = -1;
+
+        vx = x - lastX;
+        vy = y - lastY;
+
+        if (vx > 0) facingRight = true;
+        else if (vx < 0) facingRight = false;
+
+        if (vy > 0) verticalDirection = 1;
+        else if (vy < 0) verticalDirection = -1;
         else verticalDirection = 0;
+
+        lastX = x;
         lastY = y;
     }
 
