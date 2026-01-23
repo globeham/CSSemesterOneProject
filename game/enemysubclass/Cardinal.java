@@ -126,6 +126,7 @@ public class Cardinal extends Enemy {
                 g2d.setColor(Color.red);
                 g2d.fillOval(x - 8, y - 8, 16, 16);
             }
+            drawHealthBar(g, x, y - drawSize / 2, drawSize);
         } finally {
             g2d.dispose();
         }

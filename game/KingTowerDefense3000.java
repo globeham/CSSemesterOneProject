@@ -1,5 +1,5 @@
-import javax.swing.*;
 import java.awt.*;
+import javax.swing.*;
 
 /*
 KingTowerDefense3000 is the main game class that manages the game state
@@ -184,6 +184,14 @@ public class KingTowerDefense3000 extends JFrame {
     // updates game state 
     private void updateGame() {
         enemyManager.updateEnemies(TowerManager);
+        if (enemyManager.isGameOver() == true) {
+            gameTimer.stop();
+            JOptionPane.showMessageDialog(this, "Game Over! You survived until wave " + enemyManager.waveAtGameOver() + ".");
+            showMenu();
+            pack();
+            setLocationRelativeTo(null);
+            return;
+        }
         TowerManager.updateTowers(enemyManager.getEnemies());
 
         // If the wave is complete, enable Start Wave button (unless we've finished all waves)

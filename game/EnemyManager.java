@@ -9,6 +9,8 @@ public class EnemyManager {
     private ArrayList<Point2D> path;
     private int currentWave;
     private ArrayList<Enemy> enemies;
+    private boolean gameOver = false;
+    private int waveAtGameOver = 0;
 
     private int health = 100;
 
@@ -80,9 +82,14 @@ public class EnemyManager {
         return enemy;
     }
 
+    public boolean isGameOver() {
+        return gameOver;
+    }
+    
     // removes dead enemies and enemies that have reached the end of the path
     public void updateEnemies(TowerManager TowerManager) {
         if (enemies == null || enemies.isEmpty()) return;
+        
 
         java.util.Iterator<Enemy> it = enemies.iterator();
         while (it.hasNext()) {
@@ -102,15 +109,11 @@ public class EnemyManager {
                 health -= 5;
                 System.out.println("Enemy reached end! Health: " + health);
                 if(health <= 0) {
-                    System.out.println("Game Over! You've run out of health.");
-                    int playAgain = JOptionPane.showConfirmDialog(null, "Game Over! You've run out of health. Play Again?", "Game Over", JOptionPane.YES_NO_OPTION);
-                    if (playAgain == JOptionPane.YES_OPTION) {
-                        // Restart the game
-                        new KingTowerDefense3000();
-                    } else {
-                        // Exit the game
-                        System.exit(0);
-                    }
+                    gameOver = true;
+                    waveAtGameOver = currentWave;
+                    
+
+                
                 }
                 it.remove();
             }
@@ -133,6 +136,12 @@ public class EnemyManager {
         }
     }
 
+
+    // returns wave at game over
+    public int waveAtGameOver() {
+        return waveAtGameOver;
+    }
+    
     // returns list of enemies
     public ArrayList<Enemy> getEnemies() {
         return enemies;

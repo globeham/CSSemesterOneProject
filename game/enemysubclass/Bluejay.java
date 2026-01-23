@@ -127,9 +127,16 @@ public class Bluejay extends Enemy {
                     g2d.drawImage(image, dx, dy, drawSize, drawSize, null);
                 }
             } else {
+                
                 g2d.setColor(Color.BLUE);
                 g2d.fillOval(x - 8, y - 8, 16, 16);
+                
             }
+            drawHealthBar(g, x, y - drawSize / 2, drawSize);
+
+            
+
+            
         } finally {
             g2d.dispose();
         }

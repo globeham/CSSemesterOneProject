@@ -8,6 +8,7 @@ import java.util.ArrayList;
 
 public class Enemy {
     private int health;
+    private int maxHealth;
     private int reward;
     private int speed;
     private int x,y;
@@ -20,6 +21,7 @@ public class Enemy {
     // constructor for enemy class
     public Enemy(int health, int reward, int speed, ArrayList<Point2D> path, Color color) {
         this.health = health;
+        this.maxHealth = health;
         this.reward = reward;
         this.speed = speed;
         this.path = path;
@@ -57,6 +59,9 @@ public class Enemy {
     // takes damage and reduces health
     public void takeDamage(int damage) {
         health -= damage;
+        if (health < 0) {
+            health = 0;
+        }
     }
 
     // returns true if enemy is alive
@@ -72,7 +77,42 @@ public class Enemy {
             g.setColor(color);
             g.fillOval(x - 10, y - 10, 20, 20);
         }
+
+        
     }
+
+    // draws health bar above enemy
+    public void drawHealthBar(Graphics g, int centerX, int topY, int width) {
+    
+        int barH = 4;
+        int barX = centerX - width / 2;
+        int barY = topY - 8;
+    
+        // background
+        g.setColor(Color.DARK_GRAY);
+        g.fillRect(barX, barY, width, barH);
+    
+        // fill
+        double pct = (double) health / maxHealth;
+        int fillW = (int) Math.round(width * pct);
+
+        if(pct < 0.3) {
+            g.setColor(Color.RED);
+        } else if (pct < 0.8) {
+            g.setColor(Color.YELLOW);
+        } else {
+            g.setColor(Color.GREEN);
+        }
+
+        g.fillRect(barX, barY, fillW, barH);
+    
+        // border
+        g.setColor(Color.BLACK);
+        g.drawRect(barX, barY, width, barH);
+    }
+    
+
+
 
     // returns true if enemy has reached the end of the path
     public boolean reachedEnd() {
@@ -138,5 +178,8 @@ public class Enemy {
     // setter for health
     public void setHealth(int health) {
         this.health = health;
+        if(this.health > this.maxHealth) {
+            this.maxHealth = this.health;
+        }
     }
 }
