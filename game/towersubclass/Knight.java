@@ -1,6 +1,14 @@
-/*
-Knight subclass of Tower
-*/
+/**
+ * Knight
+ * 
+ * Tower subclass representing a Knight tower.
+ * Extends Tower class with specific stats and projectile behavior.
+ * Fires spike ball projectiles at enemies within range with fast fire rate.
+ * 
+ * @author Abhineet Bhardwaj
+ * @version 1.0
+ */
+
 import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.File;

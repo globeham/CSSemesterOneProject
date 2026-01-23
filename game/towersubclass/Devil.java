@@ -1,6 +1,14 @@
-/*
-devil subclass of Tower
-*/
+/**
+ * Devil
+ * 
+ * Tower subclass representing a Devil tower.
+ * Extends Tower class with specific stats and projectile behavior.
+ * Fires red orb projectiles at enemies within range.
+ * 
+ * @author Abhineet Bhardwaj
+ * @version 1.0
+ */
+
 import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.File;

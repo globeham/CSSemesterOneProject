@@ -1,9 +1,17 @@
+/**
+ * GameMap
+ * 
+ * Defines and manages game map properties including dimensions and enemy paths.
+ * Parses route codes to create paths for enemies to follow based on directional 
+ * instructions (U, D, L, R). Handles map scaling for different display resolutions.
+ * 
+ * @author Abhineet Bhardwaj
+ * @version 1.0
+ */
+
 import java.awt.*;
 import java.util.ArrayList;
 
-/*
-GameMap class sets up the maps and paths for the game
- */
 public class GameMap {
     private int width;
     private int height;

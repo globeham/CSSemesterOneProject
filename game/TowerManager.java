@@ -1,7 +1,17 @@
+/**
+ * TowerManager
+ * 
+ * Manages tower placement, updates, and projectile management.
+ * Handles player money, tower collections, and coordinate updates for all active towers.
+ * Manages projectiles spawned by towers and validates tower placement before purchase.
+ * 
+ * @author Abhineet Bhardwaj
+ * @version 1.0
+ */
+
 import java.awt.Graphics;
 import java.util.ArrayList;
 
-// tower manager class to handle all towers
 public class TowerManager {
     private ArrayList<Tower> towers;
     private ArrayList<Projectile> projectiles;

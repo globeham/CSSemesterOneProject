@@ -1,6 +1,13 @@
-/*
-Super class for all enemies in the game
-*/
+/**
+ * Enemy
+ * 
+ * Abstract superclass for all enemy types in the game.
+ * Manages enemy properties including health, speed, position, and movement along 
+ * predefined paths. Handles damage, rendering, and death mechanics.
+ * 
+ * @author Abhineet Bhardwaj
+ * @version 1.0
+ */
 
 import java.awt.*;
 import java.awt.image.BufferedImage;
