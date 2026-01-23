@@ -1,6 +1,14 @@
-/*
-King subclass of Tower
-*/
+/**
+ * King
+ * 
+ * Tower subclass representing a King tower.
+ * Extends Tower class with specific stats and projectile behavior.
+ * Fires orb projectiles at enemies within range with high damage output.
+ * 
+ * @author Abhineet Bhardwaj
+ * @version 1.0
+ */
+
 import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.File;

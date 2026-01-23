@@ -1,6 +1,12 @@
-/* 
-Helper class with point methods
-*/
+/**
+ * Point2D
+ * 
+ * Helper class representing a 2D coordinate point.
+ * Used throughout the game for storing positions of enemies, towers, and path waypoints.
+ * 
+ * @author Abhineet Bhardwaj
+ * @version 1.0
+ */
 
 public class Point2D {
     // x and y variables

@@ -1,3 +1,13 @@
+/**
+ * White
+ * 
+ * Enemy subclass representing a White bird enemy.
+ * Extends Enemy class with animated sprite rendering and specific gameplay characteristics.
+ * 
+ * @author Abhineet Bhardwaj
+ * @version 1.0
+ */
+
 import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.File;
@@ -5,9 +15,6 @@ import java.io.IOException;
 import java.util.ArrayList;
 import javax.imageio.ImageIO;
 import java.awt.geom.AffineTransform;
-/*
-White subclass of Enemy
-*/
 
 public class White extends Enemy {
     private BufferedImage[] frames;

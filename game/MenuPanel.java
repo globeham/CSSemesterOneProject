@@ -1,10 +1,18 @@
+/**
+ * MenuPanel
+ * 
+ * JPanel that displays the main menu and handles map selection functionality.
+ * Contains nested MapInfo class to store map data including route, dimensions, 
+ * and background image. Manages action listeners for map selection buttons.
+ * 
+ * @author Abhineet Bhardwaj
+ * @version 1.0
+ */
+
 import java.awt.*;
 import java.awt.event.ActionListener;
 import javax.swing.*;
 
-/*
-MenuPanel class handles the menu display and map selection
- */
 public class MenuPanel extends JPanel {
     private JButton[] mapButtons;
     private ActionListener[] actionListeners;

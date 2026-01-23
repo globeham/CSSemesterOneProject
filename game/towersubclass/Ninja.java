@@ -1,6 +1,14 @@
-/*
-Ninja subclass of Tower
-*/
+/**
+ * Ninja
+ * 
+ * Tower subclass representing a Ninja tower.
+ * Extends Tower class with specific stats and projectile behavior.
+ * Fires shuriken projectiles at enemies within range with balanced stats.
+ * 
+ * @author Abhineet Bhardwaj
+ * @version 1.0
+ */
+
 import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.File;

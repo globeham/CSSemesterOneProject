@@ -1,9 +1,17 @@
+/**
+ * Projectile
+ * 
+ * Represents a projectile fired by towers at enemies.
+ * Manages projectile movement, targeting, collision detection, and damage application.
+ * Handles both active tracking of moving targets and rendering of projectile graphics.
+ * 
+ * @author Abhineet Bhardwaj
+ * @version 1.0
+ */
+
 import java.awt.*;
 import java.awt.image.BufferedImage;
 
-/*
-Projectile class for tower attacks
- */
 public class Projectile {
     private int x, y;
     private int targetX, targetY;

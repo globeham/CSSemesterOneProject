@@ -1,16 +1,24 @@
+/**
+ * KingTowerDefense3000
+ * 
+ * Main game class that serves as the entry point and overall game controller.
+ * Manages the game frame, panels, game state, waves of enemies, and game timer.
+ * Implements the main game loop and coordinates between GamePanel, EnemyManager, 
+ * and TowerManager.
+ * 
+ * @author Abhineet Bhardwaj
+ * @version 1.0
+ */
+
 import java.awt.*;
 import javax.swing.*;
-
-/*
-KingTowerDefense3000 is the main game class that manages the game state
-*/
 
 public class KingTowerDefense3000 extends JFrame {
     private GameMap map;
     private GamePanel gamePanel;
     private EnemyManager enemyManager;
     private Timer gameTimer;
-    private TowerManager TowerManager = new TowerManager();
+    private TowerManager towerManager = new TowerManager();
     private javax.swing.JButton startWaveButton;
     private javax.swing.JLabel waveLabel;
     private javax.swing.JPanel controlPanel;
@@ -76,14 +84,14 @@ public class KingTowerDefense3000 extends JFrame {
         map = new GameMap(1000, 800);
 
         // Initialize TowerManager with starting money
-        TowerManager = new TowerManager();
-        TowerManager.addMoney(200);
+        towerManager = new TowerManager();
+        towerManager.addMoney(200);
 
         map.setPath(selectedMap.routeCode, selectedMap.startX, selectedMap.startY);
 
         enemyManager = new EnemyManager(map.getPath());
         
-        gamePanel = new GamePanel(map, enemyManager, TowerManager, selectedMap.imageFile); 
+        gamePanel = new GamePanel(map, enemyManager, towerManager, selectedMap.imageFile); 
         
         // Clear menu and show game
         getContentPane().removeAll();
@@ -183,7 +191,7 @@ public class KingTowerDefense3000 extends JFrame {
     
     // updates game state 
     private void updateGame() {
-        enemyManager.updateEnemies(TowerManager);
+        enemyManager.updateEnemies(towerManager);
         if (enemyManager.isGameOver() == true) {
             gameTimer.stop();
             JOptionPane.showMessageDialog(this, "Game Over! You survived until wave " + enemyManager.waveAtGameOver() + ".");
@@ -192,7 +200,7 @@ public class KingTowerDefense3000 extends JFrame {
             setLocationRelativeTo(null);
             return;
         }
-        TowerManager.updateTowers(enemyManager.getEnemies());
+        towerManager.updateTowers(enemyManager.getEnemies());
 
         // If the wave is complete, enable Start Wave button (unless we've finished all waves)
         if (enemyManager.isWaveComplete()) {

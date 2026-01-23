@@ -1,3 +1,13 @@
+/**
+ * Robin
+ * 
+ * Enemy subclass representing a Robin bird enemy.
+ * Extends Enemy class with animated sprite rendering and specific gameplay characteristics.
+ * 
+ * @author Abhineet Bhardwaj
+ * @version 1.0
+ */
+
 import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.File;
@@ -5,10 +15,6 @@ import java.io.IOException;
 import java.util.ArrayList;
 import javax.imageio.ImageIO;
 import java.awt.geom.AffineTransform;
-
-/*
-Robin subclass of Enemy 
-*/
 
 public class Robin extends Enemy {
     private BufferedImage[] frames;

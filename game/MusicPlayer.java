@@ -1,10 +1,17 @@
+/**
+ * MusicPlayer
+ * 
+ * Utility class for playing background music and audio in the game.
+ * Manages audio clip initialization, looping, and playback control.
+ * 
+ * @author Abhineet Bhardwaj
+ * @version 1.0
+ */
+
 import javax.sound.sampled.*;
 import java.io.File;
 import java.io.IOException;
 
-/*
-MusicPlayer allows playing background music in the game
- */
 public class MusicPlayer {
     private Clip clip;
 

@@ -1,9 +1,17 @@
+/**
+ * Tower
+ * 
+ * Abstract superclass for all tower types in the game.
+ * Manages tower properties including shooting speed, range, damage, and cost.
+ * Handles tower targeting, projectile spawning, cooldown mechanics, and rendering.
+ * 
+ * @author Abhineet Bhardwaj
+ * @version 1.0
+ */
+
 import java.awt.*;
 import java.util.ArrayList;
 
-/*
-Tower superclass for all towers in the game
- */
 public class Tower {
     private int shootingSpeed;
     private int radius;

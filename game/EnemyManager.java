@@ -1,6 +1,14 @@
-/*
-Manager class, with wave enemy functions and spawn timers
-*/
+/**
+ * EnemyManager
+ * 
+ * Manages enemy spawning, wave progression, and overall enemy behavior.
+ * Handles wave scheduling, enemy updates, health tracking, and game over conditions.
+ * Coordinates with the Enemy class to manage collections of active enemies.
+ * 
+ * @author Abhineet Bhardwaj
+ * @version 1.0
+ */
+
 import java.awt.*;
 import java.util.ArrayList;
 import javax.swing.*;

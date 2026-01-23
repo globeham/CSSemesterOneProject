@@ -1,6 +1,14 @@
-/*
-wizard subclass of Tower
-*/
+/**
+ * Wizard
+ * 
+ * Tower subclass representing a Wizard tower.
+ * Extends Tower class with specific stats and projectile behavior.
+ * Fires fireball projectiles at enemies within range with solid damage output.
+ * 
+ * @author Abhineet Bhardwaj
+ * @version 1.0
+ */
+
 import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.File;

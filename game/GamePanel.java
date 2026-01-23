@@ -1,3 +1,14 @@
+/**
+ * GamePanel
+ * 
+ * Custom JPanel that handles the rendering and display of all game elements.
+ * Responsible for drawing the game map background, enemies, towers, and projectiles.
+ * Also handles user input for tower placement and dragging interactions.
+ * 
+ * @author Abhineet Bhardwaj
+ * @version 1.0
+ */
+
 import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.File;
@@ -5,27 +16,24 @@ import java.io.IOException;
 import javax.imageio.ImageIO;
 import javax.swing.*;
 
-/*
-GamePanel class handles the game display, including all game elements
-*/
 public class GamePanel extends JPanel {
     private GameMap map;
     private EnemyManager enemyManager; 
-    private TowerManager TowerManager;
+    private TowerManager towerManager;
     private BufferedImage bgImage;
     private BufferedImage[] towerImages;
     private BufferedImage fireballImage;
     private int draggingTowerIndex = -1;
     private int dragX = -1, dragY = -1;
     
-    public GamePanel(GameMap map, EnemyManager enemyManager, TowerManager TowerManager) {
-        this(map, enemyManager, TowerManager, "images/kingtowerdefense map1.png");
+    public GamePanel(GameMap map, EnemyManager enemyManager, TowerManager towerManager) {
+        this(map, enemyManager, towerManager, "images/kingtowerdefense map1.png");
     }
     
-    public GamePanel(GameMap map, EnemyManager enemyManager, TowerManager TowerManager, String imageFile) {
+    public GamePanel(GameMap map, EnemyManager enemyManager, TowerManager towerManager, String imageFile) {
         this.map = map;
         this.enemyManager = enemyManager; 
-        this.TowerManager = TowerManager;
+        this.towerManager = towerManager;
         this.setPreferredSize(new Dimension(map.getWidth(), map.getHeight()));
         this.setBackground(Color.GREEN);
         
@@ -92,7 +100,7 @@ public class GamePanel extends JPanel {
             }
             
             Tower t = createTower(draggingTowerIndex, 0, 0);
-            if (!TowerManager.placeTower(t, panelX, panelY)) {
+            if (!towerManager.placeTower(t, panelX, panelY)) {
                 JOptionPane.showMessageDialog(null, "Cannot place tower here (not enough money).");
             }
             draggingTowerIndex = -1;
@@ -143,7 +151,7 @@ public class GamePanel extends JPanel {
 
         // draw enemies and towers (they expect display coords now)
         if (enemyManager != null) enemyManager.drawEnemies(g);
-        if (TowerManager != null) TowerManager.drawTowers(g);
+        if (towerManager != null) towerManager.drawTowers(g);
 
         // Draw drag preview with shooting radius
         if (draggingTowerIndex != -1 && dragX != -1) {
@@ -172,7 +180,7 @@ public class GamePanel extends JPanel {
         }
 
         // UI overlays
-        if (TowerManager != null) displayMoney(g, TowerManager.getMoney());
+        if (towerManager != null) displayMoney(g, towerManager.getMoney());
         if (enemyManager != null) displayHealth(g, enemyManager.getHealth());
     }
 

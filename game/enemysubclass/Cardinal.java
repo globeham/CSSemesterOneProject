@@ -1,3 +1,13 @@
+/**
+ * Cardinal
+ * 
+ * Enemy subclass representing a Cardinal bird enemy.
+ * Extends Enemy class with animated sprite rendering and specific gameplay characteristics.
+ * 
+ * @author Abhineet Bhardwaj
+ * @version 1.0
+ */
+
 import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.File;
@@ -6,9 +16,6 @@ import java.util.ArrayList;
 import javax.imageio.ImageIO;
 import java.awt.geom.AffineTransform;
 
-/* 
-Cardinal subclass of Enemy
- */
 public class Cardinal extends Enemy {
     private BufferedImage[] frames;
     private int currentFrame;
