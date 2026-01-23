@@ -14,7 +14,7 @@ public class Bluejay extends Enemy {
     private int currentFrame;
     private int frameCount;
     private long lastFrameTime;
-    private static final int FRAME_DELAY = 100; 
+    private static final int FRAME_DELAY = 100;
     private int frameWidth; 
     private int frameHeight; 
     private int drawSize = 36; 

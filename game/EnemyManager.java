@@ -69,14 +69,81 @@ public class EnemyManager {
             else if (index % 2 == 0) enemy = new Robin(55, 12, 2, path);
             else enemy = new Bluejay(40, 8, 3, path);
         }
-        // wave 11+: more Sparrows and White
-        else {
+        
+        // wave 10+: more Sparrows and Cardinals
+        else if (wave <= 13) {   
+            if (index % 5 == 0) enemy = new Sparrow(110, 50, 2, path);
+            else if (index % 3 == 0) enemy = new Cardinal(95, 25, 2, path);
+            else if (index % 2 == 0) enemy = new Robin(65, 12, 2, path);
+            else enemy = new Bluejay(45, 8, 3, path);
+
+        }
+
+        // wave 14-15: introduce White birds
+        else if (wave <= 15) {   
             if (index % 5 == 0) enemy = new Sparrow(110, 50, 2, path);
             else if (index % 3 == 0) enemy = new Cardinal(95, 25, 2, path);
             else if (index % 7 == 0) enemy = new White(150, 100, 2, path);
             else if (index % 2 == 0) enemy = new Robin(65, 12, 2, path);
-            else enemy = new Bluejay(45, 8, 3, path);           
+            else enemy = new Bluejay(45, 8, 3, path);
         }
+
+        // wave 16-20: more Whites
+        else if (wave <= 20) {   
+            if (index % 4 == 0) enemy = new Sparrow(120, 50, 2, path);
+            else if (index % 3 == 0) enemy = new Cardinal(100, 25, 2, path);
+            else if (index % 6 == 0) enemy = new White(160, 100, 2, path);
+            else if (index % 2 == 0) enemy = new Robin(70, 12, 2, path);
+            else enemy = new Bluejay(50, 8, 3, path);
+        }
+
+        // wave 21-23: even tougher enemies
+        else if (wave <= 23) {   
+            if (index % 4 == 0) enemy = new Sparrow(125, 50, 2, path);
+            else if (index % 3 == 0) enemy = new Cardinal(105, 25, 2, path);
+            else if (index % 5 == 0) enemy = new White(170, 100, 2, path);
+            else if (index % 2 == 0) enemy = new Robin(75, 12, 2, path);
+            else enemy = new Bluejay(52, 8, 3, path);
+
+        }
+
+        // wave 24-25: even tougher enemies
+        else if (wave <= 25) {   
+            if (index % 4 == 0) enemy = new Sparrow(128, 50, 2, path);
+            else if (index % 3 == 0) enemy = new Cardinal(108, 25, 2, path);
+            else if (index % 5 == 0) enemy = new White(175, 100, 2, path);
+            else if (index % 2 == 0) enemy = new Robin(78, 12, 2, path);
+            else enemy = new Bluejay(54, 8, 3, path);
+
+        }
+
+        // wave 26-28: even tougher enemies
+        else if(wave <= 28) {
+            if (index % 4 == 0) enemy = new Sparrow(129, 50, 2, path);
+            else if (index % 3 == 0) enemy = new Cardinal(109, 25, 2, path);
+            else if (index % 5 == 0) enemy = new White(178, 100, 2, path);
+            else if (index % 2 == 0) enemy = new Robin(79, 12, 2, path);
+            else enemy = new Bluejay(54, 8, 3, path);
+        }
+
+        // wave 29-30: even tougher enemies
+        else if(wave <= 30) {
+            if (index % 4 == 0) enemy = new Sparrow(130, 50, 2, path);
+            else if (index % 3 == 0) enemy = new Cardinal(110, 25, 2, path);
+            else if (index % 5 == 0) enemy = new White(180, 100, 2, path);
+            else if (index % 2 == 0) enemy = new Robin(80, 12, 2, path);
+            else enemy = new Bluejay(55, 8, 3, path);
+        }
+
+        // wave 31+: toughest enemies
+        else {
+            if (index % 4 == 0) enemy = new Sparrow(132, 50, 2, path);
+            else if (index % 3 == 0) enemy = new Cardinal(112, 25, 2, path);
+            else if (index % 5 == 0) enemy = new White(185, 100, 2, path);
+            else if (index % 2 == 0) enemy = new Robin(82, 12, 2, path);
+            else enemy = new Bluejay(56, 8, 3, path);           
+        }
+
         // Increase health progressively with wave
         enemy.setHealth(enemy.getHealth() + wave * 5);
         return enemy;
